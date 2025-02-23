@@ -1,7 +1,5 @@
 #in v1 version still using seconds_to_hours_notation() which ideally should be handeled by a better __str method
 
-import sys
-
 class TimeInterval:
 
     def __init__(self, hours, minutes, seconds):
