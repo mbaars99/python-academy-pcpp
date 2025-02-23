@@ -1,5 +1,3 @@
-import sys
-
 class TimeInterval:
 
     def __init__(self, hours=0, minutes=0, seconds=0):
