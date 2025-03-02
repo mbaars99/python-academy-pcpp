@@ -11,6 +11,7 @@ class LuxuryWatch:
     def engraving(cls, text):
         if len(text) >= 40:
             raise Exception('Engraving text is over 40 characters')
+            
         if not text.isalnum():
             raise Exception('Engraving text is not alphanumeric')
         
