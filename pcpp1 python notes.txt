@@ -1,7 +1,6 @@
 https://github.com/anthonywainer/pcpp1_certification_dumps
 https://www.udemy.com/course/pcpp1-certified-professional-in-python-programming/
 
-
 MOD 1 - OOP FOUNDATION ------------------------------------------------------------------------------------------------------------------------------
 
 We agree on the following definitions:
