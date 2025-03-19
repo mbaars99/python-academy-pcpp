@@ -1305,7 +1305,27 @@ and all its ancestors; the object takes all the class's belongings and makes use
 - composition projects a class as a container (called a composite) able to store and use other objects (derived from other classes) where each of the objects implements a 
 part of a desired class's behavior. It’s worth mentioning that blocks are loosely coupled with the composite, and those blocks could be exchanged any time, even during program runtime.
 
+Look at the simple code presented in the editor pane. The “Car” class is loosely coupled with the “engine” component. It’s a composite object. The main advantages are:
+whenever a change is applied to the engine object, it does not influence the “Car” class object structure; you can decide what your car should be equipped with.
+Our “Car” could be equipped with two different kinds of engine – a gas one or a diesel one. The developer's responsibility is to provide methods for both engine classes, 
+named in the same way (here is thestart() method) to make it work in a polymorphic manner.
 
+To favor composition over inheritance is a design principle that gives the design higher flexibility, as you can choose which domain-specific objects should be incorporated 
+into your ultimate object. It's like arming your base machine with tooling, dedicated to running a specific task, but not building a wide hierarchy structure of classes 
+covering all possible hardware combinations. In fact, with the composition approach you can more easily respond to the requirement changes regarding classes, as it does not 
+require deep dependency investigations which you would spot while implementing code with the inheritance approach.
+
+On the other hand, there is a clear drawback: composition transfers additional responsibilities to the developer. The developer should assure that all component classes that 
+are used to build the composite should implement the methods named in the same manner to provide a common interface. In the case of inheritance, if the developer forgets to 
+implement a specific method, the inherited method with the same name will be called. Additionally, in the case of inheritance, the developer has to re-implement only the 
+specific methods, not all of them, to gain a common interface.
+
+Which way should you choose? Before we answer the question, let's mention a few more things: inheritance and composition are not mutually exclusive. Real-life problems are 
+hardly every pure “is a” or “has a” cases; treat both inheritance and composition as supplementary means for solving problems;
+there is nothing wrong with composing objects of ... classes that were built using inheritance. The next example code should shed some light on this case.
+You should always examine the problem your code is about to solve before you start coding. If the problem can be modeled using an “is a” relation, then the inheritance approach 
+should be implemented. Otherwise, if the problem can be modeled using a “has a” relation, then the choice is clear – composition is the solution. Don't hesitate to experiment 
+and re-implement your solution.
 
 
 
