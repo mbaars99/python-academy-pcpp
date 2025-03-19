@@ -30,8 +30,6 @@ class bankaccount():
    
     @account.setter
     def account(self, amount):
-        # if self.__accountnumber != newaccount:
-        #     raise bankerror("Error: Not authorised to change account number: " + number)
         
         if self.__accountbalance + amount < 0:
             raise bankerror("Negative bank balance is not permitted")
