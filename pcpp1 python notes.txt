@@ -1327,6 +1327,16 @@ You should always examine the problem your code is about to solve before you sta
 should be implemented. Otherwise, if the problem can be modeled using a “has a” relation, then the choice is clear – composition is the solution. Don't hesitate to experiment 
 and re-implement your solution.
 
+Inheriting properties from built-in classes. Python gives you the ability to create a class that inherits properties from any Python built-in class in order to get a new class
+that can enrich the parent's attributes or methods. As a result, your newly-created class has the advantage of all of the well-known functionalities inherited from its parent
+or even parents and you can still access those attributes and methods. Later, you can override the methods by delivering your own modifications for the selected methods.
+In the following example, we’ll create an implementation of our own list class, which will only accept elements of the integer type. But, wait – why might you need such an object?
+Imagine that you need to collect the serial numbers of sold tickets. Sound reasonable enough?
+
+Your new class will be based on the Python list implementation and will also validate the type of elements that are about to be placed onto it.
+Such a list can be used in an application that requires the list elements to be of a specific type (integers in the ticketing example), and control over the types of elements 
+is given to the mechanisms of the new class. As a result, when solving a domain problem, we focus on the problem and not on type control.
+
 
 
 
