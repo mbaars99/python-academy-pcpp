@@ -1,5 +1,11 @@
 import random
 
+class Vehicle:
+    def __init__(self, vin, engine, tires):
+        self.vin = vin
+        self.engine = engine
+        self.tires = tires
+
 class Tires:
     def __init__(self, size):
         self.tyre_size = size
@@ -11,12 +17,6 @@ class Tires:
     def pump(self):
         self.pressure += 1
         return
-
-class Vehicle(Tires):
-    def __init__(self, vin, engine, tires):
-        super().__init__(tires)
-        self.vin = vin
-        self.engine = engine
 
 class Engine:
     def __init__(self, fuel):
@@ -34,18 +34,18 @@ class Engine:
     def get_state(self):
         return self.state
 
-citycar = Vehicle('VIN1234', Engine('ELECTRIC'), '15')
-allterrain = Vehicle('VIN5189', Engine('PETROL'), '18')
+citycar = Vehicle('VIN1234', Engine("ELECTRIC"), Tires(15))
+allterrain = Vehicle('VIN5189', Engine("PETROL"), Tires(18))
 
-print(f"Tyre pressure for VIN: {citycar.vin} is: {citycar.get_pressure()}")
+print(f"Tyre pressure for {citycar.vin} is: {citycar.tires.get_pressure()}")
 for i in range(1, random.randint(1, 50)):
-    citycar.pump()
-print(f"Tyre pressure after pumping: {citycar.get_pressure()}")
+    citycar.tires.pump()
+print(f"Tyre pressure after pumping: {citycar.tires.get_pressure()}")
 
-print(f"\nTyre pressure for VIN: {allterrain.vin} is: {allterrain.get_pressure()}")
+print(f"\nTyre pressure for {allterrain.vin} is: {allterrain.tires.get_pressure()}")
 for i in range(1, random.randint(1, 50)):
-    allterrain.pump()
-print(f"Tyre pressure after pumping: {allterrain.get_pressure()}")
+    allterrain.tires.pump()
+print(f"Tyre pressure after pumping: {allterrain.tires.get_pressure()}")
 
 print(f"\nThe state of {citycar.vin} is: {citycar.engine.get_state()}")
 citycar.engine.start()
