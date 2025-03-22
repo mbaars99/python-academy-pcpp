@@ -1341,6 +1341,48 @@ What is tightly coupled and loosely coupled code?
 Tight coupling refers to strong dependencies between components, making it challenging to modify or replace one component without affecting others. On the other hand, loose 
 coupling promotes decoupling between components, allowing for independent development, modification, and testing.
 
+Inheriting properties from built-in classes. Python gives you the ability to create a class that inherits properties from any Python built-in class in order to
+get a new class that can enrich the parent's attributes or methods. As a result, your newly-created class has the advantage of all of the well-known 
+functionalities inherited from its parent or even parents and you can still access those attributes and methods. Later, you can override the methods by 
+delivering your own modifications for the selected methods. In the following example, we’ll create an implementation of our own list class, which will only 
+accept elements of the integer type. But, wait – why might you need such an object? Imagine that you need to collect the serial numbers of sold tickets. 
+Sound reasonable enough?
 
+Your new class will be based on the Python list implementation and will also validate the type of elements that are about to be placed onto it. Such a list 
+can be used in an application that requires the list elements to be of a specific type (integers in the ticketing example), and control over the types of
+elements is given to the mechanisms of the new class. As a result, when solving a domain problem, we focus on the problem and not on type control.
 
+2.9.1.2 Inheriting properties from built-in classes // Look at the code presented in the editor pane. Something that’s worth commenting on is that we have 
+delivered:
+- a static, dedicated method for checking argument types. As we have delegated this responsibility to only one method, the code will be shorter, cleaner and 
+easier to maintain. We'll make use of this method a few times. In case the argument's type is not an integer, a ValueError exception is raised;
+- an overridden method __setitem__, which is a magic method (mind the underscores) responsible for inserting (overwriting) an element at a given position. This 
+method calls the check_value_type() method and later calls the genuine method __setitem__ which comes from the parent class, which does the rest of the job 
+(sets the validated value at a given position). Now you can sigh – “oh, what a great ability!”
+- an overridden method, append(), which is responsible for appending an element to the end of the list. This method follows the previous way of dealing with
+a new element;
+- an overridden method, extend(), to verify and add a collection of elements to the object.
 
+In the next example, we’ll create a class based on Python’s built-in dictionary, which will be equipped with logging mechanisms for details of writing and 
+reading operations performed on the elements of our dictionary. In other words, we are arming a Python dictionary with the ability to log details 
+(time and operation type) of:
+
+- class instantiation;
+- read access;
+- new element creation or update.
+
+A few notes for the code implementing the MonitoredDict class:
+- we have subclassed a dict class with a new __init__() method that calls the __init__() method from its super class. Additionally, it creates a list (self.log)
+that plays the role of a log book. Finally, the log book is populated with a message noting that the object has been created;
+- we have created the log_timestamp() method that appends crucial information to the self.log attribute;
+- we have overridden two methods inherent for the dictionary class (__getitem__() and __setitem__()) to deliver a richer implementation that logs activities. But
+don’t worry, we’re not losing anything from the parent dictionary class, because we’re still calling the corresponding methods.
+- As you run the code, you'll see that the new class is compatible with its parent, so you can use it in your applications that require activity tracking.
+
+class MonitoredDict(dict):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs) 
+#In the MonitoredDict class, super().__init__(*args, **kwargs) is called because MonitoredDict is inheriting from Python’s built-in dict class. 
+#This call ensures that the dict class is properly initialized with any arguments passed when creating an instance of MonitoredDict.
+        self.log = list()
+        self.log_timestamp('MonitoredDict created')
