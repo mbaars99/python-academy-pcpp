@@ -1337,6 +1337,10 @@ Your new class will be based on the Python list implementation and will also val
 Such a list can be used in an application that requires the list elements to be of a specific type (integers in the ticketing example), and control over the types of elements 
 is given to the mechanisms of the new class. As a result, when solving a domain problem, we focus on the problem and not on type control.
 
+What is tightly coupled and loosely coupled code?
+Tight coupling refers to strong dependencies between components, making it challenging to modify or replace one component without affecting others. On the other hand, loose 
+coupling promotes decoupling between components, allowing for independent development, modification, and testing.
+
 
 
 
