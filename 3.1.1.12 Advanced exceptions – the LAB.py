@@ -72,13 +72,21 @@ try:
 except Exception as e:
     print("Exception occurred!")
     print("Traceback details:")
+    print(e.__traceback__ )
+    print('\n#\n')
     traceback.print_tb(e.__traceback__)  # Prints the detailed call stack
 
 Exception occurred!
 Traceback details:
-  File "d:\Documents\OneDrive - M Baars\BAARS NETSEC CONSULTING\study\python\python academy\pcpp\Untitled-1adad.py", line 4, in <module>
+<traceback object at 0x0000024FE6157C80>
+
+#
+
+  File "d:\Documents\OneDrive - M Baars\BAARS NETSEC CONSULTING\study\python\python academy\pcpp\Untitled-1adad.py", line 3, in <module>
     1 / 0  # This will cause a ZeroDivisionError
     ~~^~~
+
+
 
 
 
