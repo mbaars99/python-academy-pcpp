@@ -45,3 +45,12 @@ for check in check_list:
         check()
     except RocketNotReadyError as f:
         print('RocketNotReady exception: "{}", caused by "{}"'.format(f, f.__cause__))
+
+
+# Final check procedure
+#         The captain's name is John
+#         The pilot's name is Mary
+#         The mechanic's name is Mike
+# RocketNotReady exception: "Crew is incomplete", caused by "list index out of range"
+# RocketNotReady exception: "Problem with fuel gauge", caused by "division by zero"
+# RocketNotReady exception: "Battery check failed", caused by "Battery level too low."
