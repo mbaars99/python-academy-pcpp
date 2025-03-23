@@ -54,3 +54,32 @@ for check in check_list:
 # RocketNotReady exception: "Crew is incomplete", caused by "list index out of range"
 # RocketNotReady exception: "Problem with fuel gauge", caused by "division by zero"
 # RocketNotReady exception: "Battery check failed", caused by "Battery level too low."
+
+Advanced exceptions - the traceback attribute. Each exception object owns a __traceback__ attribute.
+Python allows us to operate on the traceback details because each exception object (not only chained ones) owns a __traceback__ attribute.
+
+What does f.__traceback__ do?
+- f.__traceback__ contains the traceback object, which holds information about where the exception occurred.
+- Printing it directly shows details about the exception's call stack (i.e., where in the code the error happened).
+
+<traceback object at 0x000001F37196F080>
+<class 'traceback'>
+
+#How to Make Traceback Information Useful
+import traceback
+try:
+    1 / 0  # This will cause a ZeroDivisionError
+except Exception as e:
+    print("Exception occurred!")
+    print("Traceback details:")
+    traceback.print_tb(e.__traceback__)  # Prints the detailed call stack
+
+Exception occurred!
+Traceback details:
+  File "d:\Documents\OneDrive - M Baars\BAARS NETSEC CONSULTING\study\python\python academy\pcpp\Untitled-1adad.py", line 4, in <module>
+    1 / 0  # This will cause a ZeroDivisionError
+    ~~^~~
+
+
+
+
