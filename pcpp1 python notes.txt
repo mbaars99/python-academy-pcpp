@@ -1780,3 +1780,6 @@ ask chatgpt to explain difference between
 simple reference copy
 shallow copy
 deep copy.
+
+
+> 4.1.1.9 Performance of the deepcopy() function > cont
