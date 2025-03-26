@@ -1776,3 +1776,7 @@ print('Memory chunks:', id(a_list), id(b_list))
 print('Same memory chunk?', a_list is b_list)
 
 
+ask chatgpt to explain difference between
+simple reference copy
+shallow copy
+deep copy.
