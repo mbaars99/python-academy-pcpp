@@ -1,5 +1,4 @@
 import copy
-from decimal import Decimal
 
 warehouse = list()
 warehouse.append({'name': 'Lolly Pop', 'price': 0.4, 'weight': 133})
