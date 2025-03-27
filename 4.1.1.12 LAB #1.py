@@ -13,8 +13,8 @@ for item in warehouse:
 
 proposal = copy.deepcopy(warehouse)
 for item in proposal:
-        item['price'] = round(0.8 * item['price'], 3)
-        pass
+        if item['weight'] > 300:
+            item['price'] = round(0.8 * item['price'], 3)
 
 print('*' * 50)
 print('Price proposal')
