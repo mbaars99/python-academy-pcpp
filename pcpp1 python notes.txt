@@ -2217,3 +2217,70 @@ __init__(), responsible for object initialization.
 
 Metaclasses usually implement these two methods (__init__, __new__), taking control of the procedure of creating and initializing a new class instance. Classes receive a new layer of logic.
 
+Now that we know what’s happening under Python's hood, it’s time to implement our own metaclass. It’s important to remember that metaclasses are classes that are instantiated to get classes.
+The first step is to define a metaclass that derives from the type type and arms the class with a 'custom_attribute', as follows:
+
+class My_Meta(type):
+    def __new__(mcs, name, bases, dictionary):
+        obj = super().__new__(mcs, name, bases, dictionary)
+        obj.custom_attribute = 'Added by My_Meta'
+        return obj
+
+Pay attention to the fact that:
+
+the class My_Meta is derived from type. This makes our class a metaclass;
+our own __new__ method has been defined. Its role is to call the __new__ method of the parent class to create a new class;
+__new__ uses 'mcs' to refer to the class – it’s just a convention;
+a class attribute is created additionally;
+the class is returned.
+Let's make use of the metaclass to create our own, domain-specific class, and check if it’s armed with the custom attribute:
+
+class My_Object(metaclass=My_Meta):
+    pass
+
+print(My_Object.__dict__)
+
+Pay attention to the fact that: a new class has been defined in a way where a custom metaclass is listed in the class definition as a metaclass. This is a way to tell Python to use My_Meta as a metaclass, not as an ordinary superclass;
+we are printing the contents of the class __dict__ attribute to check if the custom attribute is present.
+
+{'__module__': '__main__', '__dict__': <attribute '__dict__' of 'My_Object' objects>, '__weakref__': <attribute '__weakref__' of 'My_Object' objects>, '__doc__': None, 'custom_attribute': 'Added by My_Meta'}
+
+Metaprogramming – another metaclass. Let's run a more serious experiment: try to build a metaclass responsible for completing classes with a method (if missing) to ensure that all your classes are equipped with a method named 'greetings'.
+As you can see, there is a greetings() function defined that greets everyone who interacts with it. In a real-life scenario, it could be a function that is obligatory for every class and is responsible for the consistency of object attributes; it could be a function returning a checksum for some of an attribute's values.
+In My_Class1, by design, there is no greetings function, so when the class is constructed, it is equipped with a default function by the metaclass.
+In contrast, in My_Class2 the greetings function is present from the very beginning.
+Both classes rely on the same metaclass. When you run the code, you'll see that both class instances are equipped with greetings() methods. For the “poorer” class, it is completed by the metaclass.
+
+def greetings(self):
+    print('Just a greeting function, but it could be something more serious like a check sum')
+
+class My_Meta(type):
+    def __new__(mcs, name, bases, dictionary):
+        if 'greetings' not in dictionary:
+            dictionary['greetings'] = greetings
+        obj = super().__new__(mcs, name, bases, dictionary)
+        return obj
+
+class My_Class1(metaclass=My_Meta):
+    pass
+
+class My_Class2(metaclass=My_Meta):
+    def greetings(self):
+        print('We are ready to greet you!')
+
+myobj1 = My_Class1()
+myobj1.greetings()
+myobj2 = My_Class2()
+myobj2.greetings()
+
+Just a greeting function, but it could be something more serious like a check sum
+We are ready to greet you!
+output
+
+This is how metaclasses become very useful – they can control the process of class instantiation, and adjust created classes to conform with selected rules.
+
+The concept of metaclasses looks hard at first glance, but if you’re responsible for API design or development, metaclasses are the magic that could help you in your work.
+When you want to change your classes automatically, but decorators are not efficient, then metaclasses should help you.
+In all other cases, you should agree with Tim Peters that you shouldn’t worry about metaclasses, because many problems can be solved in a simpler way than by using metaclasses.
+But still, it’s beneficial to understand metaclasses in order to know when to employ them to solve a class type problem.
+
