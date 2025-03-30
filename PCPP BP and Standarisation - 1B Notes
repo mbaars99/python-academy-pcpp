@@ -36,3 +36,5 @@ There are three different types of PEPs:
 Standards Track PEPs, which describe new language features and implementations;
 Informational PEPs, which describe Python design issues, as well as provide guidelines and information to the Python community;
 Process PEPs, which describe various processes that revolve around Python (e.g., propose changes, provide recommendations, specify certain procedures).
+
+>>> 1.1.1.3 What is PEP?
