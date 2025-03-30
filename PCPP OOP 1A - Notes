@@ -1,0 +1,2285 @@
+https://github.com/anthonywainer/pcpp1_certification_dumps
+https://www.udemy.com/course/pcpp1-certified-professional-in-python-programming/
+
+MOD 1 - OOP FOUNDATION ------------------------------------------------------------------------------------------------------------------------------
+
+We agree on the following definitions:
+
+class — an idea, blueprint, or recipe for an instance;
+instance — an instantiation of the class; very often used interchangeably with the term 'object';
+object — Python's representation of data and methods; objects could be aggregates of instances;
+attribute — any object or class trait; could be a variable or method;
+method — a function built into a class that is executed on behalf of the class or object; some say that it’s a 'callable attribute';
+type — refers to the class that was used to instantiate the object.
+
+an object is a very useful culmination of all the terms described above:
+
+- it is an independent instance of class, and it contains and aggregates some specific and valuable data in attributes relevant to individual objects;
+- it owns and shares methods used to perform actions.
+
+A class expresses an idea; it’s a blueprint or recipe for an instance. The class is something virtual, it can contain lots of different details, and there is always one
+class of any given type. Think of a class as a building blueprint that represents the architect’s ideas, and class instances as the actual buildings.
+Classes describe attributes and functionalities together to represent an idea as accurately as possible. You can build a class from scratch or, something that is more
+interesting and useful, employ inheritance to get a more specialized class based on another class. Additionally, your classes could be used as superclasses for newly 
+derived classes (subclasses).
+
+An instance is one particular physical instantiation of a class that occupies memory and has data elements. This is what 'self' refers to when we deal with class instances.
+An object is everything in Python that you can operate on, like a class, instance, list, or dictionary. The term instance is very often used interchangeably with the term 
+object, because object refers to a particular instance of a class. It’s a bit of a simplification, because the term object is more general than instance.
+The relation between instances and classes is quite simple: we have one class of a given type and an unlimited number of instances of a given class.
+Each instance has its own, individual state (expressed as variables, so objects again) and shares its behavior (expressed as methods, so objects again).
+
+An attribute is a capacious term that can refer to two major kinds of class traits:
+- variables, containing information about the class itself or a class instance; classes and class instances can own many variables;
+- methods, formulated as Python functions; they represent a behavior that could be applied to the object.
+
+Each Python object has its own individual set of attributes. We can extend that set by adding new attributes to existing objects, change (reassign) them or control 
+access to those attributes. It is said that methods are the 'callable attributes' of Python objects. By 'callable' we should understand anything that can be called; such 
+objects allow you to use round parentheses () and eventually pass some parameters, just like functions. 
+>>> This is a very important fact to remember: methods are called on behalf of an object and are usually executed on object data.
+
+Class attributes are most often addressed with 'dot' notation, i.e., <class>dot<attribute>. The other way to access attributes (variables) it to use the getattr() and 
+setattr() functions.
+
+A type is one of the most fundamental and abstract terms of Python:
+it is the foremost type that any class can be inherited from;
+as a result, if you’re looking for the type of class, then type is returned;
+in all other cases, it refers to the class that was used to instantiate the object; it’s a general term describing the type/kind of any object;
+it’s the name of a very handy Python function that returns the class information about the objects passed as arguments to that function;
+it returns a new type object when type() is called with three arguments; we'll talk about this in the 'metaclass' section.
+Python comes with a number of built-in types, like numbers, strings, lists, etc., that are used to build more complex types. Creating a new class creates a new
+type of object, allowing new instances of that type to be made
+
+In Python, type is a special and built-in class that is used to define and manage the types of objects. It is one of the most fundamental concepts in Python because
+it serves two primary purposes:
+
+1. Creating New Types (Classes)
+type itself is a metaclass, meaning it is a class that defines other classes. When you define a class in Python, the class itself is an instance of the type class. 
+In other words, all classes in Python are instances of the type class.
+
+# You can create a class dynamically using the type() function by passing the class name, a tuple of base classes, and a dictionary of attributes and methods.
+# Create a class dynamically using `type`
+# MyClass = type('MyClass', (object,), {'attr': 42})
+# Create an instance of the dynamically created class
+# instance = MyClass()
+print(instance.attr)  # Output: 42
+
+2. Inspecting the Type of an Object
+You can use type() to get the type of an object or an instance, which will return the class to which that object belongs.
+
+x = 42
+print(type(x))  # Output: <class 'int'>
+
+Summary of type:
+- Metaclass: type is the base class of all Python classes. Every class is an instance of type.
+- Type of objects: type() is used to get the class of an object.
+- Dynamic Class Creation: You can create new classes dynamically using type().
+- Inheritance from type: You can define custom metaclasses by inheriting from type, enabling you to control the class creation process.
+
+Python allows for variables to be used at the instance level or the class level. Those used at the instance level are referred to as instance variables, whereas 
+variables used at the class level are referred to as class variables.
+
+Instance variable exists when and only when it is explicitly created and added to an object. This can be done during the object's initialization, performed by 
+the __init__ method, or later at any moment of the object's life. Furthermore, any existing property can be removed at any time.
+
+Each object carries its own set of variables – they don't interfere with one another in any way. The word instance suggests that they are closely connected to
+the objects (which are class instances), not to the classes themselves. To get access to the instance variable, you should address the variable in the following 
+way: objectdotvariable_name.
+
+__init__ creates an instance_var variable for the instance. The keyword self is used to indicate that this variable is created coherently and individually for 
+the instance to make it independent from other instances of the same class. 
+
+In Python, the self keyword is used within class methods to refer to the specific instance of the class that is being manipulated. It ensures that each instance 
+of a class maintains its own separate data.
+
+Why Use self?: 
+-Differentiates instance variables from local variables
+-Ensures independence of each instance: Without self, all instances would share the same variable, which is not the desired behavior in most cases.
+
+To list the contents of each object, using the built-in __dict__ property that is present for every Python object.
+print('contents of d1:', d1.__dict__)
+
+Class variables are defined within the class construction, so these variables are available before any class instance is created. To get access to a class variable, 
+simply access it using the class name, and then provide the variable name. Similarly to instance variables, class variables are shown in the class's __dict__ dictionary.
+shared variable
+{'__module__': '__main__', 'class_var': 'shared variable', '__dict__': <attribute '__dict__' of 'Demo' objects>, '__weakref__': <attribute '__weakref__' of 'Demo' objects>,
+ '__doc__': None}
+
+As a class variable is present before any instance of the class is created, it can be used to store some meta data relevant to the class, rather than to the instances:
+
+fixed information like description, configuration, or identification values;
+mutable information like the number of instances created (if we add a code to increment the value of a designated variable every time we create a class instance)
+
+A class variable is a class property that exists in just one copy, and it is stored outside any class instance. Because it is owned by the class itself, all class variables
+are shared by all instances of the class. They will therefore generally have the same value for every instance; but as the class variable is defined outside the object, 
+it is not listed in the object's __dict__.
+
+Conclusion: when you want to read the class variable value, you can use a class or class instance to access it.
+
+>> When you want to set or change a value of the class variable, you should access it via the class, but not the class instance, as you can do for reading. <<<
+
+Class variables and instance variables are often utilized at the same time, but for different purposes. As mentioned before, class variables can refer to some meta 
+information or common information shared amongst instances of the same class.
+
+MOD 1 - OOP ADVANCED ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Python core syntax – an ability to perform specific operations on different data types, when operations are formulated using the same operators or instructions, or even functions.
+
+Python core syntax covers:
+
+operators like '+', '-', '*', '/', '%' and many others;
+operators like '==', '<', '>', '<=', 'in' and many others;
+indexing, slicing, subscripting;
+built-in functions like str(), len()
+reflexion – isinstance(), issubclass()
+and a few more elements.
+
+The name of each magic method is surrounded by double underscores (Pythonistas would say “dunder” for double underscores, as it’s a shorter and more convenient phrase). 
+Dunders indicate that such methods are not called directly, but called in a process of expression evaluation, according to Python core syntax rules.
+The '+' operator is in fact converted to the __add__() method and the len() function is converted to the __len__() method. These methods must be delivered by a 
+class (now it’s clear why we treat classes as blueprints) to perform the appropriate action.
+
+In Python, "dunders" (short for double underscores) refer to special methods or attributes that are predefined by the language. They are typically surrounded by double
+underscores (__method__) and are often used for special functionality within objects or classes. These dunder methods, also known as magic methods or special methods, 
+provide the ability to modify or customize the behavior of Python objects and allow them to interact with built-in operations (e.g., arithmetic, comparisons, string formatting).
+>>> Dunder methods in Python enable you to define the behavior of your objects when interacting with Python's built-in functions and operators.
+
+Why Are Dunder Methods Important?
+- They allow you to customize built-in behaviors (like arithmetic, comparisons, and string representation) for objects.
+- They can be used to implement the behavior of standard Python operations, making objects more intuitive to use.
+- They're a core part of Python's "object-oriented" features, enabling fine-grained control over how objects interact with each other and the Python runtime.
+
+List of Common Dunder Methods, Here are some of the most common dunder methods:
+__init__ – Initialization (constructor)
+__str__ – String representation (for print())
+__repr__ – Official string representation (for debugging)
+__add__ – Addition operator (+)
+__sub__ – Subtraction operator (-)
+__mul__ – Multiplication operator (*)
+__len__ – Length of an object (for len())
+__eq__ – Equality comparison (==)
+__lt__ – Less-than comparison (<)
+__del__ – Destructor (cleanup)
+__call__ – Allows an object to be called like a function
+
+Look at the following simple code:
+
+number = 10
+print(number + 20)
+
+It is in fact translated to:
+number = 10
+print(number.__add__(20))
+
+>> What Python does is it executes the magic method __add__() on the left operand (“number” object in the example) of the expression, and the right operand (number 20) is 
+passed as a method argument.
+
+You could ask: how can I know what magic method is responsible for a specific operation?
+The dir() function gives you a quick glance at an object’s capabilities and returns a list of the attributes and methods of the object. 
+When you call dir() on integer 10, you'll get:
+
+>>> dir(10)
+['__abs__', '__add__', '__and__', '__bool__', '__ceil__', '__class__', '__delattr__', '__dir__', '__divmod__', '__doc__', '__eq__', '__float__', '__floor__', '__floordiv__', 
+'__format__', '__ge__', '__getattribute__', '__getnewargs__', '__getstate__', '__gt__', '__hash__', '__index__', '__init__', '__init_subclass__', '__int__', '__invert__', 
+'__le__', '__lshift__', '__lt__', '__mod__', '__mul__', '__ne__', '__neg__', '__new__', '__or__', '__pos__', '__pow__', '__radd__', '__rand__', '__rdivmod__', '__reduce__',
+ '__reduce_ex__', '__repr__', '__rfloordiv__', '__rlshift__', '__rmod__', '__rmul__', '__ror__', '__round__', '__rpow__', '__rrshift__', '__rshift__', '__rsub__', 
+ '__rtruediv__', '__rxor__', '__setattr__', '__sizeof__', '__str__', '__sub__', '__subclasshook__', '__truediv__', '__trunc__', '__xor__', 'as_integer_ratio', 'bit_count',
+ 'bit_length', 'conjugate', 'denominator', 'from_bytes', 'imag', 'numerator', 'real', 'to_bytes']
+>>>
+
+
+>>> help(10)
+Help on int object:
+
+class int(object)
+ |  int([x]) -> integer
+ |  int(x, base=10) -> integer
+ |
+ |  Convert a number or string to an integer, or return 0 if no arguments
+ |  are given.  If x is a number, return x.__int__().  For floating point
+ |  numbers, this truncates towards zero.
+ 
+<<<there is more>>>
+
+The following tables will help you in situations where you'd like to implement a custom method for a Python core operation, as the tables enumerate the most popular operators 
+and functions that own magic method counterparts. Treat it as a list from a universal map, unrelated to any special data type.
+
+Comparison Methods
+Function or Operator    Magic Method           Purpose
+---------------------------------------------------------------
+==                      __eq__(self, other)    Equality operator
+!=                      __ne__(self, other)    Inequality operator
+<                       __lt__(self, other)    Less-than operator
+>                       __gt__(self, other)    Greater-than operator
+<=                      __le__(self, other)    Less-than-or-equal-to operator
+>=                      __ge__(self, other)    Greater-than-or-equal-to operator
+
+Function or Operator    Magic Method           Implementation Meaning or Purpose
+-------------------------------------------------------------------------------
++                      __pos__(self)          Unary positive, like a = +b
+-                      __neg__(self)          Unary negative, like a = -b
+abs()                  __abs__(self)          Behavior for abs() function
+round(a, b)            __round__(self, b)     Behavior for round() function
+
+Common Binary Operators and Functions
+Function or Operator    Magic Method               Implementation Meaning or Purpose
+------------------------------------------------------------------------------------
++                      __add__(self, other)       Addition operator
+-                      __sub__(self, other)       Subtraction operator
+*                      __mul__(self, other)       Multiplication operator
+//                     __floordiv__(self, other)  Integer division operator
+/                      __div__(self, other)       Division operator
+%                      __mod__(self, other)       Modulo operator
+**                     __pow__(self, other)       Exponential (power) operator
+
+
+Augmented Operators and Functions: By augmented assignment, we mean a sequence of unary operators and assignments like a += 20.
+
+Function or Operator    Magic Method               Implementation Meaning or Purpose
+--------------------------------------------------------------------------------------
++=                     __iadd__(self, other)       Addition and assignment operator
+-=                     __isub__(self, other)       Subtraction and assignment operator
+*=                     __imul__(self, other)       Multiplication and assignment operator
+//=                    __ifloordiv__(self, other)  Integer division and assignment operator
+/=                     __idiv__(self, other)       Division and assignment operator
+%=                     __imod__(self, other)       Modulo and assignment operator
+**=                    __ipow__(self, other)       Exponential (power) and assignment operator
+
+Type Conversion Methods: Python offers a set of methods responsible for the conversion of built-in data types.
+
+Function      Magic Method        Implementation Meaning or Purpose
+-----------------------------------------------------------------------
+int()        __int__(self)       Conversion to integer type
+float()      __float__(self)     Conversion to float type
+oct()        __oct__(self)       Conversion to string, containing an octal representation
+hex()        __hex__(self)       Conversion to string, containing a hexadecimal representation
+
+
+Object Introspection: Python offers a set of methods responsible for representing object details using ordinary strings.
+
+Function      Magic Method                Implementation Meaning or Purpose
+----------------------------------------------------------------------------------
+str()        __str__(self)               Responsible for handling str() function calls
+repr()       __repr__(self)              Responsible for handling repr() function calls
+format()     __format__(self, formatstr) Called when new-style string formatting is applied to an object
+hash()       __hash__(self)              Responsible for handling hash() function calls
+dir()        __dir__(self)               Responsible for handling dir() function calls
+bool()       __nonzero__(self)           Responsible for handling bool() function calls
+
+
+Object Retrospection: Following the topic of object introspection, there are methods responsible for object reflection.
+
+Function                        Magic Method                     Implementation Meaning or Purpose
+-------------------------------------------------------------------------------------------------
+isinstance(object, class)      __instancecheck__(self, object)   Responsible for handling isinstance() function calls
+issubclass(subclass, class)    __subclasscheck__(self, subclass) Responsible for handling issubclass() function calls
+
+
+Object Attribute Access: Access to object attributes can be controlled via the following magic methods.
+
+Expression Example          Magic Method                            Implementation Meaning or Purpose
+-------------------------------------------------------------------------------------------------------
+object.attribute            __getattr__(self, attribute)           Handles access to a non-existing attribute
+object.attribute            __getattribute__(self, attribute)      Handles access to an existing attribute
+object.attribute = value    __setattr__(self, attribute, value)    Handles setting an attribute value
+del object.attribute        __delattr__(self, attribute)           Handles deleting an attribute
+
+
+Methods Allowing Access to Containers: Containers hold an arbitrary number of objects and provide ways to access and iterate over them. 
+Examples: list, dictionary, tuple, set.
+
+Expression Example         Magic Method                      Implementation Meaning or Purpose
+--------------------------------------------------------------------------------------------------------
+len(container)             __len__(self)                     Returns the number of elements in the container
+container[key]            __getitem__(self, key)            Fetches an element identified by the key
+container[key] = value    __setitem__(self, key, value)     Sets a value for an element identified by the key
+del container[key]        __delitem__(self, key)            Deletes an element identified by the key
+for element in container  __iter__(self)                    Returns an iterator for the container
+item in container        __contains__(self, item)          Checks if the container contains the selected item
+
+
+The list of special methods built-in in Python contains more entities. 
+For more information, refer to https://docs.python.org/3/reference/datamodel.html#special-method-names
+
+INHERITANCE AND POLYMORPHISM  ------------------------------------------------------------------------------------------------------------------------
+
+Inheritance is a pillar of OOP : Inheritance is one of the fundamental concepts of object oriented programming, and expresses the fundamental relationships between classes: 
+superclasses (parents) and their subclasses (descendants). Inheritance creates a class hierarchy. Any object bound to a specific level of class hierarchy inherits all the traits 
+(methods and attributes) defined inside any of the superclasses.
+
+This means that inheritance is a way of building a new class, not from scratch, but by using an already defined repertoire of traits. The new class inherits (and this is the key)
+all the already existing equipment, but is able to add some new features if needed.
+
+Each subclass is more specialized (or more specific) than its superclass. Conversely, each superclass is more general (more abstract) than any of its subclasses. Note that 
+we've presumed that a class may only have one superclass — this is not always true, but we'll discuss this issue more a bit later.
+
+A very simple example of two-level inheritance is presented here:
+
+class Vehicle:
+    pass
+
+class LandVehicle(Vehicle):
+    pass
+
+class TrackedVehicle(LandVehicle):
+    pass
+	
+All the presented classes are empty for now, as we're going to show you how the mutual relations between the super- and subclasses work. We can say that:
+
+- the Vehicle class is the superclass for both the LandVehicle and TrackedVehicle classes;
+- the LandVehicle class is a subclass of Vehicle and a superclass of TrackedVehicle at the same time; <<<
+- the TrackedVehicle class is a subclass of both the Vehicle and LandVehicle classes.
+
+Single inheritance vs. multiple inheritance: There are no obstacles to using multiple inheritance in Python. You can derive any new class from more than one previously 
+defined class. But multiple inheritance should be used with more prudence than single inheritance because:
+
+- a single inheritance class is always simpler, safer, and easier to understand and maintain;
+- multiple inheritance may make method overriding somewhat tricky; moreover, using the super() function can lead to ambiguity;
+- it is highly probable that by implementing multiple inheritance you are violating the single responsibility principle;
+- If your solution tends to require multiple inheritance, it might be a good idea to think about implementing composition.
+
+MRO — Method Resolution Order
+The spectrum of issues possibly coming from multiple inheritance is illustrated by a classical problem named the diamond problem, or even the deadly diamond of death. The name 
+reflects the shape of the inheritance diagram — take a look at the picture.
+
+- There is the top-most superclass named A;
+- there are two subclasses derived from A — B and C;
+- and there is also the bottom-most subclass named D, derived from B and C (or C and B, as these two variants mean different things in Python)
+
+The ambiguity that arises here is caused by the fact that class B and class C are inherited from superclass A, and class D is inherited from both classes B and C. If you 
+want to call the method info(), which part of the code would be executed then?
+
+Python lets you implement such a class hierarchy. Can you guess the output of the code?
+
+class A:
+    def info(self):
+        print('Class A')
+
+class B(A):
+    def info(self):
+        print('Class B')
+
+class C(A):
+    def info(self):
+        print('Class C')
+
+class D(B, C):
+    pass
+
+D().info()
+
+Possible pitfalls — MRO inconsistency : MRO can report definition inconsistencies when a subtle change in the class D definition is introduced, which is possible when you 
+work with complex class hierarchies. Imagine that you have changed the class D definition from:
+
+class D(B, C):
+    pass
+
+to:
+
+class D(A, C):
+    pass
+
+>> TypeError: Cannot create a consistent method resolution order (MRO) for bases A, C
+
+This message informs us that the MRO algorithm had problems determining which method (originating from the A or C classes) should be called.
+
+------------------------------------------------------------------------------------------
+FROM PCAP:
+
+The C3 Linearization Algorithm ensures that:
+
+* A child class is always checked before its parent classes.
+* Parent classes are checked in the order they are specified in the inheritance list.
+* No class is checked twice.
+------------------------------------------------------------------------------------------
+
+Due to MRO, you should knowingly list the superclasses in the subclass definition. In the following example, class D is based on classes B and C, whereas class E is based on
+classes C and B (the order matters!).
+
+class D(B, C): # those classes can behave totally differently
+    pass
+
+class E(C, B): # those classes can behave totally differently
+    pass
+
+As a result, those classes can behave totally differently, because the order of the superclasses is different.
+
+2.2.1.7 Inheritance and polymorphism — Inheritance as a pillar of OOP
+
+In Python, polymorphism is the provision of a single interface to objects of different types. In other words, it is the ability to create abstract methods from specific 
+types in order to treat those types in a uniform way.
+
+--------- FROM PCAP ---------
+OOP Key Features:
+Encapsulation: Bundling data and methods that operate on the data into objects.
+Abstraction: Hiding implementation details and exposing only the necessary functionality.
+Inheritance: Reusing code by creating new classes based on existing ones.
+Polymorphism: Objects can take on many forms, allowing methods to behave differently based on the object.
+---------
+
+Imagine that you have to print a string or an integer — it is more convenient when a function is called simply print, not print_string or print_integer. However, the string 
+must be handled differently than the integer, so there will be two implementations of the function that lead to printing, but naming them with a common name creates a 
+convenient abstract interface independent of the type of value to be printed. The same rule applies to the operation of addition. We know that addition is expressed with 
+the '+' operator, and we can apply that operator when we add two integers or concatenate two strings or two lists.
+
+Let's see what methods are present for both built-in types (string and integer) responsible for handling the '+' operator. Once again, we'll use the dir(object) function, 
+which returns a list of object attributes.
+
+>>> dir(1)
+['__abs__', '__add__', '__and__', '__bool__', '__ceil__', '__class__', '__delattr__', '__dir__', '__divmod__', '__doc__', '__eq__', '__float__', '__floor__', '__floordiv__', '__format__', '__ge__', '__getattribute__', '__getnewargs__', '__getstate__', '__gt__', '__hash__', '__index__', '__init__', '__init_subclass__', '__int__', '__invert__', '__le__', '__lshift__', '__lt__', '__mod__', '__mul__', '__ne__', '__neg__', '__new__', '__or__', '__pos__', '__pow__', '__radd__', '__rand__', '__rdivmod__', '__reduce__', '__reduce_ex__', '__repr__', '__rfloordiv__', '__rlshift__', '__rmod__', '__rmul__', '__ror__', '__round__', '__rpow__', '__rrshift__', '__rshift__', '__rsub__', '__rtruediv__', '__rxor__', '__setattr__', '__sizeof__', '__str__', '__sub__', '__subclasshook__', '__truediv__', '__trunc__', '__xor__', 'as_integer_ratio', 'bit_count', 'bit_length', 'conjugate', 'denominator', 'from_bytes', 'imag', 'numerator', 'real', 'to_bytes']
+
+>>> dir('a')
+['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__getstate__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isascii', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'removeprefix', 'removesuffix', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']
+>>>
+
+As you can see, there are many attributes available for the string and integer types, many of them carrying the same names. The first name common to both lists is __add__, 
+which is a special method responsible for handling addition, as you may remember from the previous slides. To briefly demonstrate polymorphism on integers and strings, 
+execute the following code in the Python interpreter:
+
+a = 10
+print(a.__add__(20))
+b = 'abc'
+print(b.__add__('def'))
+
+The result:
+30
+abcdef
+
+By the way, if you look for a method that is used when you print a value associated with an object, the __str__ method is called to prepare a string that is used in turn 
+for printing.
+
+Remember: You can use inheritance to create polymorphic behavior, and usually that's what you do, but that's not what polymorphism is about.
+
+In the right pane, there is a code implementing both inheritance and polymorphism: inheritance: class Radio inherits the turn_on() method from its superclass — that is why 
+we see The device was turned on string twice. Other subclasses override that method and as a result we see different lines being printed;
+polymorphism: all class instances allow the calling of the turn_on() method, even when you refer to the objects using the arbitrary variable element.
+
+Polymorphism is the ability of different objects to respond to the same method or function in a way that is specific to their class. It is a core concept in object-oriented
+programming (OOP), allowing different types to be used interchangeably if they share a common interface.
+
+"You can use inheritance to create polymorphic behavior..."
+> Inheritance allows a subclass to override methods from a parent class, enabling different behavior while keeping the same method signature.
+
+"...but that's not what polymorphism is about."
+
+Polymorphism is not strictly tied to inheritance. 
+>>> It’s about the ability of different objects to be used interchangeably through a shared interface. <<<
+
+Even duck typing in Python achieves polymorphism without inheritance
+
+class Car:
+    def move(self):
+        return "Car is moving"
+
+class Boat:
+    def move(self):
+        return "Boat is sailing"
+
+def transport(vehicle):
+    print(vehicle.move())
+
+transport(Car())  # Output: Car is moving
+transport(Boat()) # Output: Boat is sailing
+
+Here, Car and Boat don’t inherit from a common base class, yet they both implement move(), allowing polymorphism through duck typing.
+
+Conclusion
+- Inheritance is a tool to enable polymorphism but not a requirement for it.
+- Polymorphism is about interface compatibility, allowing different objects to be used in a consistent way.
+- Duck typing in Python is a great example of polymorphism without inheritance.
+
+Example: Polymorphism Without Inheritance using duck typing in Python.
+
+class Email:
+    def send(self):
+        return "Sending an email..."
+
+class SMS:
+    def send(self):
+        return "Sending an SMS..."
+
+class PushNotification:
+    def send(self):
+        return "Sending a push notification..."
+
+def send_message(service):
+    print(service.send())
+
+# Different objects, no inheritance, but all work with send_message()
+email = Email()
+sms = SMS()
+push = PushNotification()
+
+send_message(email)  # Output: Sending an email...
+send_message(sms)    # Output: Sending an SMS...
+send_message(push)   # Output: Sending a push notification...
+
+>>>>
+Duck typing is a fancy name for the term describing an application of the duck test: "If it walks like a duck and it quacks like a duck, then it must be a duck", 
+which determines whether an object can be used for a particular purpose. An object's suitability is determined by the presence of certain attributes, rather than by the 
+type of the object itself. <<<<<
+
+>>>>
+Duck typing is another way of achieving polymorphism, and represents a more general approach than polymorphism achieved by inheritance. When we talk about inheritance, 
+all subclasses are equipped with methods named the same way as the methods present in the superclass. In duck typing, we believe that objects own the methods that are 
+called. If they do not own them, then we should be prepared to handle exceptions. Let's talk about two things that share conceptually similar methods, but represent 
+totally different things, like cheese and wax. Both can melt, and we use the melted forms for different purposes. <<<<<
+
+Summary:
+- polymorphism is used when different class objects share conceptually similar methods (but are not always inherited)
+- polymorphism leverages clarity and expressiveness of the application design and development;
+- when polymorphism is assumed, it is wise to handle exceptions that could pop up.
+
+Extended function argument syntax: When we talk about function arguments, we should recall the following facts:
+- some functions can be invoked without arguments;
+- functions may require a specific number of arguments with no exclusions; we have to pass a required number of arguments in an imposed order to follow function definition;
+- functions might have already defined default values for some parameters, so we do not have to pass all arguments as missing arguments, complete with defaults; parameters with 
+  default values are presented as keyword parameters;
+- we can pass arguments in any order if we are assigning keywords to all argument values, otherwise positional ones are the first ones on the arguments list.
+- Now let’s get familiar with the functions that can accept any arbitrary number of positional arguments and keyword arguments.
+
+So far we've been using a few such functions, but we haven't focused much on that fact. The most basic example is a print() function:
+
+print()
+print(3)
+print(1, 20, 10)
+print('--', '++')
+
+All presented invocations of the print() function end correctly, and the argument values are passed to the standard output.
+Another interesting example can be presented with a list function:
+
+a_list = list()
+b_list = list(10, 20, 43, 54, 23, 23, 34, 23, 2)
+
+print(a_list)
+print(b_list)
+
+Similarly to the print() function, the list() function invocation accepts an arbitrary number of arguments. In fact, there are many, many other functions that accept 
+arbitrary numbers of parameters, and you can spot them easily when reading third-party code.
+
+These two special identifiers (named *args and **kwargs) should be put as the last two parameters in a function definition. Their names could be changed because it is 
+just a convention to name them 'args' and 'kwargs', but it’s more important to sustain the order of the parameters and leading asterisks.
+>>> Those two special parameters are responsible for handling any number of additional arguments (placed next after the expected arguments) passed to a called function:
+
+*args – refers to a tuple of all additional, not explicitly expected positional arguments, so arguments passed without keywords and passed next after the expected arguments. 
+In other words, *args collects all unmatched positional arguments;
+
+**kwargs (keyword arguments) – refers to a dictionary of all unexpected arguments that were passed in the form of keyword=value pairs. 
+Likewise, **kwargs collects all unmatched keyword arguments.
+
+>> In Python, asterisks are used to denote that args and kwargs parameters are not ordinary parameters and should be unpacked, as they carry multiple items.
+
+def combiner(a, b, *args, **kwargs):
+    print(a, type(a))
+    print(b, type(b))
+    print(args, type(args))
+    print(kwargs, type(kwargs))
+
+combiner(10, '20', 40, 60, 30, argument1=50, argument2='66')
+
+10 <class 'int'>
+20 <class 'str'>
+(40, 60, 30) <class 'tuple'>
+{'argument1': 50, 'argument2': '66'} <class 'dict'>
+
+As you can see, the function's definition is expecting two arguments, a and b, and the definition is prepared to handle any number of additional arguments. Moreover, all 
+other positional arguments are available in a tuple (as you may remember, a tuple is a sequence type, because the order matters in this case). Similarly, all unexpected 
+keyword parameters are available in a dictionary type parameter.
+
+Now if you take a look at the built-in print() function definition, it becomes clear how this function can accept any number of arguments, and why there is an asterisk 
+before one of the parameters:
+
+def print(self, *args, sep=' ', end='\n', file=None):
+
+Extended function argument syntax – forwarding arguments to other functions. When you want to forward arguments received by your very smart and universal function 
+(defined with *args and **kwargs, of course) to another handy and smart function, you should do that in the following way:
+
+def combiner(a, b, *args, **kwargs):
+    super_combiner(*args, **kwargs)
+
+def super_combiner(*my_args, **my_kwargs):
+    print('my_args:', my_args)
+    print('my_kwargs', my_kwargs)
+
+combiner(10, '20', 40, 60, 30, argument1=50, argument2='66')
+my_args: (40, 60, 30)
+my_kwargs {'argument1': 50, 'argument2': '66'}
+
+Pay attention how the super_combiner() function is called – it’s called with genuine arguments so those arguments can be handled in the same way as they are handled by 
+the combiner function. If we remove the asterisks from the function call, then both tuple and dictionary would be captured by my_args, as it is supposed to handle all 
+positional arguments (none of them is keyworded).
+
+def combiner(a, b, *args, **kwargs):
+    super_combiner(args, kwargs) #asteriks removed so tuple and dictionary would be captured by my_args
+
+def super_combiner(*my_args, **my_kwargs):
+    print('my_args:', my_args)
+    print('my_kwargs', my_kwargs)
+
+combiner(10, '20', 40, 60, 30, argument1=50, argument2='66')
+
+Pay attention to the slightly modified code presented in the right pane and its output to see the differences.
+my_args: ((40, 60, 30), {'argument1': 50, 'argument2': '66'})
+my_kwargs {}
+
+The last example in this section shows how to combine *args, a key word, and **kwargs in one definition:
+
+def combiner(a, b, *args, c=20, **kwargs):
+    super_combiner(c, *args, **kwargs)
+	
+def super_combiner(my_c, *my_args, **my_kwargs):
+    print('my_args:', my_args)
+    print('my_c:', my_c)
+    print('my_kwargs', my_kwargs)
+	
+combiner(1, '1', 1, 1, c=2, argument1=1, argument2='1')
+
+Result:
+
+my_args: (1, 1)
+my_c: 2
+my_kwargs {'argument1': 1, 'argument2': '1'}
+
+As you can see, Python offers complex parameter handling:
+- positional arguments (a,b) are distinguished from all other positional arguments (args)
+- the keyword 'c' is distinguished from all other keyworded parameters.
+Now that we know the purpose of special parameters, we can move on to decorators that make intensive use of those parameters.
+
+>>> 2.4.1.1 DECORATORS
+
+A decorator is one of the design patterns that describes the structure of related objects. Python is able to decorate functions, methods, and classes.
+>>> The decorator's operation is based on wrapping the original function with a new "decorating" function (or class), hence the name "decoration".  <<<
+This is done by passing the original function (i.e., the decorated function) as a parameter to the decorating function so that the decorating function 
+can call the passed function. The decorating function returns a function that can be called later.
+
+Of course, the decorating function does more, because it can take the parameters of the decorated function and perform additional actions and that make it a real decorating 
+function. The same principle is applied when we decorate classes. We'll talk about this a bit later. So from now on, the term 'decorator' will be understood as a decorating 
+class or a decorating function.
+
+Decorators are used to perform operations before and after a call to a wrapped object or even to prevent its execution, depending on the circumstances. As a result, we can 
+change the operation of the packaged object without directly modifying it.
+
+Decorators are used in:
+
+- the validation of arguments;
+- the modification of arguments;
+- the modification of returned objects;
+- the measurement of execution time;
+- message logging;
+- thread synchronization;
+- code refactorization;
+- caching.
+
+Decorator functions in Python are higher-order functions that allow you to modify or extend the behavior of another function without changing its actual code.
+A decorator takes a function as input, adds some functionality, and returns a new function.
+
+def my_decorator(func):
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func()
+        print("Something is happening after the function is called.")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+
+Function decorators: Let's analyze some examples before we get down to the next dose of theory. So, let's create a function – simple_hello() is one of the simplest functions
+we could think of. We'll decorate it in a moment.
+
+def simple_hello():
+    print("Hello from simple function!")
+
+Now let's create another function, simple_decorator(), which is more interesting as it accepts an object as a parameter, displays a __name__ attribute value of the parameter, a
+and returns an accepted object.
+
+def simple_decorator(function):
+    print('We are about to call "{}"'.format(function.__name__))
+    return function
+
+The last lines are responsible for both method invocations:
+
+decorated = simple_decorator(simple_hello)
+decorated()
+
+When you run the code, the result should be:
+
+We are about to call "simple_hello"
+Hello from simple function!
+
+We have created a simple decorator – a function which accepts another function as its only argument, prints some details, and returns a function or other callable object.
+
+def simple_decorator(function):
+    print('We are about to call "{}"'.format(function.__name__))
+    return function
+
+@simple_decorator
+def simple_hello():
+    print("Hello from simple function!")
+
+simple_hello() 
+
+# The @simple_decorator syntax modifies simple_hello before it is fully defined. This is equivalent to manually calling: simple_hello = simple_decorator(simple_hello)
+
+As you can see, the definition of the simple_hello() function is literally decorated with '@simple_decorator' – isn't that a nice syntax?
+
+This means that: 
+- operations are performed on object names;
+- this is the most important thing to remember: the name of the simple_function object ceases to indicate the object representing our simple_function() and from that moment 
+  on it indicates the object returned by the decorator, the simple_decorator.
+- The implementation of the decorator pattern introduces this syntax, which appears to be very important and useful to developers. That is why decorators have gained great 
+  popularity and are widely used in Python code. It should be mentioned that decorators are very useful for refactoring or debugging the code.
+  
+Key Takeaways
+- The decorator function runs immediately when the decorated function is defined (before it's even called).
+- This decorator does not modify the function—it just prints a message and returns it as is.
+- Decorators usually wrap functions, but in this case, it only logs a message and leaves the function unchanged.
+
+Decorators are commonly used for:
+
+✅ Logging: Track function calls.
+✅ Access Control: Restrict unauthorized users.
+✅ Caching: Speed up computations.
+✅ Profiling: Measure function execution time.
+✅ Retries: Handle intermittent failures.
+
+Another decorator example:
+
+def log_decorator(func):
+    def wrapper(*args, **kwargs):
+        print(f"Calling {func.__name__} with args={args}, kwargs={kwargs}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@log_decorator
+def greet(name):
+    print(f"Hello, {name}!")
+
+greet("Alice")
+
+Decorators should be universal. Consider a function that accepts arguments and should also be decorated. Decorators, which should be universal, must support any function, 
+regardless of the number and type of arguments passed. In such a situation, we can use the *args and **kwargs concepts. We can also employ a closure technique to persist 
+arguments.
+
+def warehouse_decorator(material):
+    def wrapper(our_function):
+        def internal_wrapper(*args):
+            print('<strong>*</strong> Wrapping items from {} with {}'.format(our_function.__name__, material))
+            our_function(*args)
+            print()
+        return internal_wrapper
+    return wrapper
+
+@warehouse_decorator('kraft')
+def pack_books(*args):
+    print("We'll pack books:", args)
+
+
+@warehouse_decorator('foil')
+def pack_toys(*args):
+    print("We'll pack toys:", args)
+
+@warehouse_decorator('cardboard')
+def pack_fruits(*args):
+    print("We'll pack fruits:", args)
+
+
+pack_books('Alice in Wonderland', 'Winnie the Pooh')
+pack_toys('doll', 'car')
+pack_fruits('plum', 'pear')
+
+Arguments passed to the decorated function are available to the decorator, so the decorator can print them. This is a simple example, as the arguments were just printed, 
+but not processed further. A nested function (internal_wrapper) could reference an object (own_function) in its enclosing scope thanks to the closure.
+
+Decorators can accept their own attributes. In Python, we can create a decorator with arguments. Let’s create a program in which the decorator will be more generic – we’ll 
+allow you to pass the packing material in the argument.
+
+See the code presented in the right pane. The warehouse_decorator() function created in this way has become much more flexible and universal than 'simple_decorator', because
+it can handle different materials. Note that our decorator is enriched with one more function to make it able to handle arguments at all call levels.
+
+The pack_books function will be executed as follows:
+- the warehouse_decorator('kraft') function will return the wrapper function;
+- the returned wrapper function will take the function it is supposed to decorate as an argument;
+- the wrapper function will return the internal_wrapper function, which adds new functionality (material display) and runs the decorated function.
+- The biggest advantage of decorators is now clearly visible:
+
+we don’t have to change every 'pack' function to display the material being used;
+we just have to add a simple one liner in front of each function definition.
+
+Decorator stacking: Python allows you to apply multiple decorators to a callable object (function, method or class).
+The most important thing to remember is the order in which the decorators are listed in your code, because it determines the order of the executed decorators. When your 
+function is decorated with multiple decorators:
+
+@outer_decorator
+@inner_decorator
+def function():
+    pass
+
+abcd = subject_matter_function()
+
+the call sequence will look like the following:
+- the outer_decorator is called to call the inner_decorator, then the inner_decorator calls your function;
+- when your function ends it execution, the inner_decorator takes over control, and after it finishes its execution, the outer_decorator is able to finish its job.
+- This routing mimics the classic stack concept.
+
+The syntactic sugar presented above is the equivalent of the following nested calls:
+- subject_matter_function = outer_decorator(inner_decorator(subject_matter_function())))
+- abcd = subject_matter_function()
+
+It’s less readable than a simple call to your function, isn't it? Another advantage becomes clear when you think about the number of modifications you should add to 
+gain the same functionality, because you'd have to modify each call to your function.
+
+In the right pane, you'll find a real example of stacked decorators. We’ve created two decorators:
+- big_container – which packs boxes into the collective material passed
+- warehouse_decorator – which wraps single items into different materials.
+- We’ve also created functions for packaging different kinds of items, each decorated with two decorators.
+
+This example demonstrates that packaging functions are called simply (and could be called many times in different places in your code) and every time those functions' 
+behavior would be extended in a relevant way.
+
+--------
+>>> Python decorators are a powerful and elegant way to modify the behavior of a function or a method without changing its code. <<< They are often used to add functionality 
+to functions, such as logging, enforcing access control, memoization, or timing execution. 🎯 What is a Decorator? A decorator is a function that wraps another function
+to modify its behavior. In Python, decorators are implemented as higher-order functions, which means they can accept a function as an argument and return a new function.
+
+basic syntax:
+
+def decorator_function(original_function):
+    def wrapper_function(*args, **kwargs):
+        print('Wrapper executed before {}'.format(original_function.__name__))
+        return original_function(*args, **kwargs)
+    return wrapper_function
+
+@decorator_function
+def display():
+    print('Display function executed')
+
+display()
+
+How It Works: @decorator_function is the decorator syntax, which is shorthand for:
+display = decorator_function(display)
+
+When display() is called:
+The wrapper_function inside decorator_function is executed first. Then, it calls the original display function. Any additional code in the wrapper is also executed.
+--------
+
+Decorating functions with classes: A decorator does not have to be a function. In Python, it could be a class that plays the role of a decorator as a function.
+
+We can define a decorator as a class, and in order to do that, we have to use a __call__ special class method. When a user needs to create an object that acts as a 
+function (i.e., it is callable) then the function decorator needs to return an object that is callable, so the __call__ special method will be very useful.
+
+class SimpleDecorator:
+    def __init__(self, own_function):
+        self.func = own_function
+
+    def __call__(self, *args, **kwargs):
+        print('"{}" was called with the following arguments'.format(self.func.__name__))
+        print('\t{}\n\t{}\n'.format(args, kwargs))
+        self.func(*args, **kwargs)
+        print('Decorator is still operating')
+
+@SimpleDecorator
+def combiner(*args, **kwargs):
+    print("\tHello from the decorated function; received arguments:", args, kwargs)
+
+combiner('a', 'b', exec='yes')
+
+A short explanation of special methods:
+- the __init__ method assigns a decorated function reference to the self.attribute for later use;
+- the __call__ method, which is responsible for supporting a case when an object is called, calls a previously referenced function.
+- The advantage of this approach, when compared to decorators expressed with functions, is:
+
+classes bring all the subsidiarity they can offer, like inheritance and the ability to create dedicated supportive methods.
+
+When you pass arguments to the decorator, the decorator mechanism behaves quite differently than presented in example of decorator that 
+does not accept arguments:
+- the reference to function to be decorated is passed to __call__ method which is called only once during decoration process,
+- the decorator arguments are passed to __init__ method
+
+class WarehouseDecorator:
+    def __init__(self, material):
+        self.material = material
+
+    def __call__(self, own_function):
+        def internal_wrapper(*args, **kwargs):
+            print('<strong>*</strong> Wrapping items from {} with {}'.format(own_function.__name__, self.material))
+            own_function(*args, **kwargs)
+            print()
+        return internal_wrapper
+
+@WarehouseDecorator('kraft')
+def pack_books(*args):
+    print("We'll pack books:", args)
+	
+pack_books('Alice in Wonderland', 'Winnie the Pooh')
+
+Class decorators strongly refer to function decorators, because they use the same syntax and implement the same concepts. Instead of wrapping individual methods with function 
+decorators, class decorators are ways to manage classes or wrap special method calls into additional logic that manages or extends instances that are created.
+If we consider syntax, class decorators appear just before the 'class' instructions that begin the class definition (similar to function decorators, they appear just before 
+the function definitions).
+
+The simplest use can be presented as follows:
+
+@my_decorator
+class MyClass:
+
+obj = MyClass()
+
+and it is adequate for the following snippet:
+
+def my_decorator(A):
+   ...
+
+class MyClass:
+   ...
+
+MyClass = my_decorator(MyClass())
+
+obj = MyClass()
+
+Like function decorators, the new (decorated) class is available under the name 'MyClass' and is used to create an instance. The original class named 'MyClass' is no longer 
+available in your name space. The callable object returned by the class decorator creates and returns a new instance of the original class, extended in some way.
+
+Decorators – summary: A decorator is a very powerful and useful tool in Python, because it allows programmers to modify the behavior of a function, method, or class.
+Decorators allow us to wrap another callable object in order to extend its behavior. Decorators rely heavily on closures and *args and **kwargs.
+Interesting note: the idea of decorators was described in two documents – PEP 318 and PEP 3129. Don't be discouraged that the first PEP was prepared for Python 2, 
+because what matters here is the idea, not the implementation in a specific Python.
+
+-----------
+
+Different faces of Python methods. Until now, we’ve been implementing methods that have performed operations on the instances (objects), and in particular the attributes 
+of the instance, so we’ve called them instance methods. The instance methods, as the first parameter, take the self parameter, which is their hallmark. It’s worth emphasizing 
+and remembering that self allows you to refer to the instance. Of course, it follows that in order to successfully use the instance method, the instance must have previously
+existed. The code in the editor demonstrates the idea presented above. Each of the Example class objects has its own copy of the instance variable __internal, and the 
+get_internal() method allows you to read the instance variable specific to the indicated instance. This is possible thanks to using self. The name of the parameter self was 
+chosen arbitrarily and you can use a different word, but you must do it consistently in your code. It follows from the convention that self literally means a reference to 
+the instance.
+
+The static and class methods. Two other types of method can also be used in the Object Oriented Approach (OOP):
+
+- class methods;
+- static methods.
+
+These alternative types of method should be understood as tool methods, extending our ability to use classes, not necessarily requiring the creation of class instances to use them.
+As a result, our perception of the Python class concept is extended by two types of specialized methods.
+
+Class methods. Class methods are methods that, like class variables, work on the class itself, and not on the class objects that are instantiated. <<< 
+You can say that they are methods bound to the class, not to the object. When can this be useful? There are several possibilities, 
+here are the two most popular:
+
+- we control access to class variables, e.g., to a class variable containing information about the number of created instances or the serial number given to the last 
+  produced object, or we modify the state of the class variables;
+- we need to create a class instance in an alternative way, so the class method can be implemented by an alternative constructor.
+
+Convention: To be able to distinguish a class method from an instance method, the programmer signals it with the @classmethod decorator preceding the class method definition.
+Additionally, the first parameter of the class method is cls, which is used to refer to the class methods and class attributes.
+As with self, cls was chosen arbitrarily (i.e., you can use a different name, but you must do it consistently).
+
+class Example:
+    __internal_counter = 0
+
+    def __init__(self, value):
+        Example.__internal_counter +=1
+
+    @classmethod
+    def get_internal(cls):
+        return '# of objects created: {}'.format(cls.__internal_counter)
+
+print(Example.get_internal())
+
+example1 = Example(10)
+print(Example.get_internal())
+
+The get_internal() method is a class method. This has been signaled to the Python interpreter by using an appropriate decorator. Additionally, the method uses the cls parameter 
+to access the class variable appropriate for the Example class. Of course, you can use the reference to “Example.__internal_counter”, but this will be inconsistent with the
+convention and the code loses its effectiveness in communicating its own meaning. An exception is the __init__() method, which by definition is an instance method, so it can’t 
+use “cls”, and as a result it references the class variable by the “Example” prefix.
+
+class Car:
+    def __init__(self, vin):
+        print('Ordinary __init__ was called for', vin)
+        self.vin = vin
+        self.brand = ''
+
+    @classmethod
+    def including_brand(cls, vin, brand):
+        print('Class method was called')
+        _car = cls(vin)
+        _car.brand = brand
+        return _car
+
+car1 = Car('ABCD1234')
+car2 = Car.including_brand('DEF567', 'NewBrand')
+
+print(car1.vin, car1.brand)
+print(car2.vin, car2.brand)
+
+The code presented in the editor shows how to use the class method as an alternative constructor, allowing you to handle an additional argument.
+The including_brand method is a class method, and expects a call with two parameters ('vin' and 'brand'). The first parameter is used to create an object using 
+the standard __init__ method. In accordance with the convention, the creation of a class object (i.e., calling the __init__ method, among other things) is done using cls(vin).
+Then the class method performs an additional task – in this case, it supplements the brand instance variable and finally returns the newly created object.
+
+Understanding cls(vin): cls is a reference to the class (Car in this case) when a class method is called.
+Using cls(vin) is equivalent to calling Car(vin), which creates a new instance of the class.
+>>> Whenever a class is called like a function (Car(vin) or cls(vin)), Python internally calls the __init__ method to initialize the new object.
+
+Static methods are methods that do not require (and do not expect!) a parameter indicating the class object or the class itself in order to execute their code.
+
+class Bank_Account:
+    def __init__(self, iban):
+        print('__init__ called')
+        self.iban = iban
+            
+    @staticmethod
+    def validate(iban):
+        if len(iban) == 20:
+            return True
+        else:
+            return False
+			
+When can it be useful? When you need a utility method that comes in a class because it is semantically related, but does not require an object of that class to execute its code;
+consequently, when the static method does not need to know the state of the objects or classes.
+
+Convention: To be able to distinguish a static method from a class method or instance method, the programmer signals it with the @staticmethod decorator preceding the class
+method definition.  fsStatic methods do not have the ability to modify the state of objects or classes, because they lack the parameters that would allow this.
+
+An example of using the static method: Imagine a class that represents a bank account, that is, a class that provides methods to operate on bank accounts. This may include a 
+method that validates the correctness of the account number recorded in accordance with the IBAN standard.
+This is a great place to introduce a static method, which, provided by the bank account class, will be used to validate the character string and will answer the question: can 
+a given character string be an account number before the object is created? To shorten the size of the sample code, the static method responsible for validation checks only the 
+length of the string, and only those numbers whose length is 20 characters are treated as valid. Note that for the purpose of validating three different character strings,
+it isn’t necessary to create class objects.
+
+class Bank_Account:
+    def __init__(self, iban):
+        print('__init__ called')
+        self.iban = iban
+            
+    @staticmethod
+    def validate(iban):
+        if len(iban) == 20:
+            return True
+        else:
+            return False
+
+account_numbers = ['8' * 20, '7' * 4, '2222']
+
+for element in account_numbers:
+    if Bank_Account.validate(element):
+        print('We can use', element, ' to create a bank account')
+    else:
+        print('The account number', element, 'is invalid')
+
+Using static and class methods - comparison. The time has come to compare the use of class and static methods:
+
+- a class method requires 'cls' as the first parameter and a static method does not;
+- a class method has the ability to access the state or methods of the class, and a static method does not;
+- a class method is decorated by '@classmethod' and a static method by '@staticmethod';
+- a class method can be used as an alternative way to create objects, and a static method is only a utility method.
+
+ABSTRACT CLASSES: Python is considered to be a very flexible programming language, but that doesn’t mean that there are no controls to impose a set of functionalities or an 
+order in a class hierarchy. When you develop a system in a group of programmers, it would be useful to have some means of establishing requirements for classes in matters of 
+interfaces (methods) exposed by each class. What is an abstract class? An abstract class should be considered a blueprint for other classes, a kind of contract between a 
+class designer and a programmer: the class designer sets requirements regarding methods that must be implemented by just declaring them, but not defining them in detail. 
+Such methods are called abstract methods. The programmer has to deliver all method definitions and the completeness would be validated by another, dedicated module. The 
+programmer delivers the method definitions by overriding the method declarations received from the class designer.
+
+This contract assures you that a child class, built upon your abstract class, will be equipped with a set of concrete methods imposed by the abstract class.
+Why do we want to use abstract classes? The very important reason is: we want our code to be polymorphic, so all subclasses have to deliver a set of their own method
+implementations in order to call them by using common method names. Furthermore, a class which contains one or more abstract methods is called an abstract class. This means 
+that abstract classes are not limited to containing only abstract methods – some of the methods can already be defined, but if any of the methods is an abstract one, then 
+the class becomes abstract. What is an abstract method? An abstract method is a method that has a declaration, but does not have any implementation. We'll give some examples 
+of such methods to emphasize their abstract nature.
+
+Let's talk about an example: Assume that you’re designing a music player application, intended to support multiple file formats. Some of the formats are known now, but some 
+are not yet known. The idea is to design an abstract class representing a base music format and corresponding methods for “open”, “play”, “get details”, “rewind”, etc., to 
+maintain polymorphism. Your team should implement concrete classes for each format you'd like to support. Whenever new format specifications become available, you won’t have 
+to rework your music player code, you’ll just have to deliver a class supporting the new file format, fulfilling the contract imposed by the abstract class. Remember that it 
+isn’t possible to instantiate an abstract class, and it needs subclasses to provide implementations for those abstract methods which are declared in the abstract classes. This
+behavior is a test performed by a dedicated Python module to validate if the developer has implemented a subclass that overrides all abstract methods.	
+
+When we’re designing large functional units, in the form of classes, we should use an abstract class. When we want to provide common implemented functionality for all 
+implementations of the class, we could also use an abstract class, because abstract classes partially allow us to implement classes by delivering concrete definitions for 
+some of the methods, not only declarations. We have just defined the means by which to provide a common Application Program Interface (API) for a set of subclasses. This 
+capability is especially useful in situations where your team or third-party is going to provide implementations, such as with plugins in an application, even after the 
+main application development is finished.
+
+Let's start with a typical class that can be instantiated:
+
+class BluePrint:
+    def hello(self):
+        print('Nothing is blue unless you need it')
+bp = BluePrint()
+bp.hello()
+
+Abstract Base Classes (ABC)
+
+There’s nothing new for you here – it’s just an example of creating a class and instantiating it. Python has come up with a module which provides the helper class for 
+defining Abstract Base Classes (ABC) and that module name is abc. The ABC allows you to mark classes as abstract ones and distinguish which methods of the base abstract 
+class are abstract. A method becomes abstract by being decorated with an @abstractmethod decorator.
+
+import abc
+
+class BluePrint(abc.ABC):
+    @abc.abstractmethod
+    def hello(self):
+        pass
+
+class GreenField(BluePrint):
+    def hello(self):
+        print('Welcome to Green Field!')
+
+
+gf = GreenField()
+gf.hello()
+
+To start with ABC you should: import the abc module; make your base class inherit the helper class ABC, which is delivered by the abc module;
+decorate abstract methods with @abstractmethod, which is delivered by the abc module.
+
+Now we'll try to instantiate the BluePrint class:
+
+bp = BluePrint()
+
+    bp = BluePrint()
+         ^^^^^^^^^^^
+TypeError: Can't instantiate abstract class BluePrint with abstract method hello
+
+indicates that:
+
+- it’s possible to instantiate the GreenField class and call the hello method, because the Python developer has provided a concrete definition of the hello method.
+In other words, the Python developer has overridden the abstract method hello with their own implementation. When the base class provides more abstract methods, all of 
+them must be overridden in a subclass before the subclass can be instantiated.
+
+- Python raises a TypeError exception when we try to instantiate the base BluePrint class, because it contains an abstract method.
+
+Now we'll try to inherit the abstract class and forget about overriding the abstract method by creating a RedField class that does not override the hello method.
+
+import abc
+
+class BluePrint(abc.ABC):
+    @abc.abstractmethod
+    def hello(self):
+        pass
+
+class GreenField(BluePrint):
+    def hello(self):
+        print('Welcome to Green Field!')
+
+class RedField(BluePrint):
+    def yellow(self):
+        pass
+
+gf = GreenField()
+gf.hello()
+
+rf = RedField()
+
+rf = RedField()
+TypeError: Can't instantiate abstract class RedField with abstract methods hello
+
+indicates that:
+
+1) it’s possible to instantiate the GreenField class and call the hello method;
+2) the RedField class is still recognized as an abstract one, because it inherits all elements of its super class, which is abstract, and the RedField class does not 
+override the abstract hello method.
+
+Multiple inheritance: When you plan to implement a multiple inheritance from abstract classes, remember that an effective subclass should override all abstract 
+methods inherited from its super classes.
+
+Summary:
+- Abstract Base Class (ABC) is a class that cannot be instantiated. Such a class is a base class for concrete classes;
+- ABC can only be inherited from;
+- we are forced to override all abstract methods by delivering concrete method implementations. <<<
+
+
+Attribute encapsulation
+Encapsulation is one of the fundamental concepts in object-oriented programming (amongst inheritance, polymorphism, and abstraction). It describes the idea of 
+bundling attributes and methods that work on those attributes within a class. Encapsulation is used to hide the attributes inside a class like in a capsule, 
+preventing unauthorized parties' direct access to them. Publicly accessible methods are provided in the class to access the values, and other objects call 
+those methods to retrieve and modify the values within the object. This can be a way to enforce a certain amount of privacy for the attributes.
+
+This picture presents the idea: direct access to the object attribute should not be possible, but you can always invoke methods, acting like proxies, to perform 
+some actions on the attributes. Python introduces the concept of properties that act like proxies to encapsulated attributes. This concept has some interesting 
+features:
+
+- the code calling the proxy methods might not realize if it is "talking" to the real attributes or to the methods controlling access to the attributes;
+- in Python, you can change your class implementation from a class that allows simple and direct access to attributes to a class that fully controls access 
+  to the attributes, and what is most important –consumer implementation does not have to be changed; by consumer we understand someone or something (it could
+  be a legacy code) that makes use of your objects.
+
+Let's start with a few analogies from real life:
+Imagine a washing machine door ( object ) that protects access to your laundry ( attribute values ) while your appliance is washing it ( processing ). You
+have a set of controls ( methods ) that allow you to manage your laundry, or even see it (many wash machines are equipped with a transparent window).
+So, while the washing machine is processing your laundry, you are not able to directly access the laundry. This is how attribute encapsulation works.
+
+Another good example is a money bank; this time it’s a more IT-related example:
+When your money ( attribute value ) is deposited in the bank account ( object ), you cannot access it directly and without some checks or security. This is a 
+basic countermeasure to protect your account from withdrawals exceeding certain limits or the account balance. But you can always make use of some dedicated 
+interfaces (methods like a mobile application or a web application) to spend money up to an appropriate amount.
+
+Attribute encapsulation can be also used to limit unauthorized access: reading and modifying the account balance. Remember that this is not full access control, 
+the programmer can still get access to your attributes intentionally as Python does not deliver true privacy. Why? Guido Van Rossum, best known as the author
+of Python, once said: "We're all consenting adults here" justifying the absence of such access restrictions. So, if your code does intentionally access the
+attributes marked as private (prefixed with a double underscore) in a direct way, then remember that this behavior is unpythonic.
+
+The last example could be presented with the behavior of a class representing a water or fuel tank: It would not be wise to pour any amount of liquid directly
+into the tank ( object ) exceeding the total tank capacity, or request setting the liquid level to a negative value.
+
+@2.7.1.3 Encapsulation
+Python allows you to control access to attributes with the built-in property() function and corresponding decorator @property. This decorator plays a very 
+important role: 
+- it designates a method which will be called automatically when another object wants to read the encapsulated attribute value;
+- the name of the designated method will be used as the name of the instance attribute corresponding to the encapsulated attribute;
+- it should be defined before the method responsible for setting the value of the encapsulated attribute, and before the method responsible for deleting the 
+encapsulated attribute.
+
+Let's have look at the code in the editor. We see that every Tank class object has a __level attribute, and the class delivers the methods responsible for 
+handling access to that attribute. The @property decorated method is a method to be called when some other code wants to read the level of liquid in our tank.
+We call such a read method getter. Pay attention to the fact that the method following the decorator gives the name (tank) to the attribute visible outside
+of the class. Moreover, we see that two other methods are named the same way, but as we are using specially crafted decorators to distinguish them, this won’t 
+cause any problems:
+
+@tank.setter() – designates the method called for setting the encapsulated attribute value;
+@tank.deleter() – designates the method called when other code wants to delete the encapsulated attribute.
+
+@property
+def level(self):
+    return self.__level
+#This makes level a read-only property, allowing controlled access to __level.
+
+print('Current liquid level:', our_tank.level) #this is where the method gets called automaticly
+
+2.7.1.4 Encapsulation
+As those attribute name repetitions could be misleading, let's explain the naming convention:
+- the getter method is decorated with '@property'. It designates the name of the attribute to be used by the external code;
+- the setter method is decorated with '@name.setter'. The method name should be the attribute name;
+- the deleter method is decorated with '@name.deleter'. The method name should should be the attribute name.
+
+Let's instantiate the class and perform some operations on the object's attribute: As you can see, access to the __level attribute is handled by the designated
+methods by allowing the other code accessing the 'level' attribute. We can also react to operations when someone wants to break some constraints associated
+with the tank capacity. Let's instantiate the class and perform some operations on the object's attribute: As you can see, access to the __level attribute is 
+handled by the designated methods by allowing the other code accessing the 'level' attribute. We can also react to operations when someone wants to break 
+some constraints associated with the tank capacity. The other code can make use of the 'level' attribute in a convenient way, without even knowing about 
+the logic hidden behind it. So, whenever you'd like to control access to an attribute, you should prepare dedicated properties, because properties control 
+only designated attributes. It’s worth mentioning another useful and interesting feature of properties: properties are inherited, so you can call setters 
+as if they were attributes.
+
+Composition vs Inheritance - two ways to the same destination: Inheritance
+So far we've been using and following the inheritance concept when modeling our classes to represent real-life issues. Inheritance is a great concept, one 
+of the most important foundations of object-oriented programming that models a tight relation between two classes: the base class and the derived class, called
+a subclass. The result of this relation is a subclass class that inherits all methods and all properties of the base class, and allows a subclass to extend 
+everything that has been inherited. By extending a base class, you are creating a more specialized class. Moreover, we say that these classes are tightly coupled.
+
+Inheritance models what is called an is a relation. Examples:
+
+a Laptop is a (specialized form of) Computer;
+a Square is a (specialized form of) Figure;
+a Hovercraft is a Vehicle.
+
+The primary use of inheritance is to reuse the code. If two classes perform similar tasks, we can create a common base class for them, to which we transfer identical 
+methods and properties. This will facilitate testing and potentially increase application reliability in case of changes. In case of any problems, it will also be 
+easier to find the cause of the error. As a result, your inheriting classes could form a tree.
+
+Note: the hierarchy grows from top to bottom, like tree roots, not branches. The most general, and the widest, class is always at the top (the superclass) while its 
+descendants are located below (the subclasses). What could be inherited in this “Vehicles” structure? All classes derived from Vehicles own properties and methods 
+responsible for informing the user of its mileage, starting and stopping the vehicle, fueling, etc. Once you inherit a “mileage” property from the base class, then 
+it is present in all subclasses.
+
+The same principle should apply to the tank() method responsible for fueling every vehicle object, so the polymorphism, another pillar of the OOP allowing you to 
+call the tank() method on every “vehicle” object, is easily achieved. The inheritance concept is a powerful one, but you should remember that with great power comes 
+great responsibility. When you are reckless, then with the inheritance (especially multiple inheritances) you can create a huge, complex, and hierarchical structure of classes.
+This hierarchy would be hard to understand, debug, and extend. This phenomenon is known as the class explosion problem, and is one of the antipatterns of programming.
+
+Inheritance is not the only way of constructing adaptable objects. You can achieve similar goals by using a concept named composition.
+This concept models another kind of relation between objects; it models what is called a has a relation. Examples:
+-a Laptop has a network card;
+-a Hovercraft has a specific engine.
+Composition is the process of composing an object using other different objects. The objects used in the composition deliver a set of desired traits (properties and/or methods) 
+so we can say that they act like blocks used to build a more complicated structure.
+
+It can be said that:
+- inheritance extends a class's capabilities by adding new components and modifying existing ones; in other words, the complete recipe is contained inside the class itself 
+and all its ancestors; the object takes all the class's belongings and makes use of them;
+- composition projects a class as a container (called a composite) able to store and use other objects (derived from other classes) where each of the objects implements a 
+part of a desired class's behavior. It’s worth mentioning that blocks are loosely coupled with the composite, and those blocks could be exchanged any time, even during program runtime.
+
+Look at the simple code presented in the editor pane. The “Car” class is loosely coupled with the “engine” component. It’s a composite object. The main advantages are:
+whenever a change is applied to the engine object, it does not influence the “Car” class object structure; you can decide what your car should be equipped with.
+Our “Car” could be equipped with two different kinds of engine – a gas one or a diesel one. The developer's responsibility is to provide methods for both engine classes, 
+named in the same way (here is thestart() method) to make it work in a polymorphic manner.
+
+To favor composition over inheritance is a design principle that gives the design higher flexibility, as you can choose which domain-specific objects should be incorporated 
+into your ultimate object. It's like arming your base machine with tooling, dedicated to running a specific task, but not building a wide hierarchy structure of classes 
+covering all possible hardware combinations. In fact, with the composition approach you can more easily respond to the requirement changes regarding classes, as it does not 
+require deep dependency investigations which you would spot while implementing code with the inheritance approach.
+
+On the other hand, there is a clear drawback: composition transfers additional responsibilities to the developer. The developer should assure that all component classes that 
+are used to build the composite should implement the methods named in the same manner to provide a common interface. In the case of inheritance, if the developer forgets to 
+implement a specific method, the inherited method with the same name will be called. Additionally, in the case of inheritance, the developer has to re-implement only the 
+specific methods, not all of them, to gain a common interface.
+
+Which way should you choose? Before we answer the question, let's mention a few more things: inheritance and composition are not mutually exclusive. Real-life problems are 
+hardly every pure “is a” or “has a” cases; treat both inheritance and composition as supplementary means for solving problems;
+there is nothing wrong with composing objects of ... classes that were built using inheritance. The next example code should shed some light on this case.
+You should always examine the problem your code is about to solve before you start coding. If the problem can be modeled using an “is a” relation, then the inheritance approach 
+should be implemented. Otherwise, if the problem can be modeled using a “has a” relation, then the choice is clear – composition is the solution. Don't hesitate to experiment 
+and re-implement your solution.
+
+Inheriting properties from built-in classes. Python gives you the ability to create a class that inherits properties from any Python built-in class in order to get a new class
+that can enrich the parent's attributes or methods. As a result, your newly-created class has the advantage of all of the well-known functionalities inherited from its parent
+or even parents and you can still access those attributes and methods. Later, you can override the methods by delivering your own modifications for the selected methods.
+In the following example, we’ll create an implementation of our own list class, which will only accept elements of the integer type. But, wait – why might you need such an object?
+Imagine that you need to collect the serial numbers of sold tickets. Sound reasonable enough?
+
+Your new class will be based on the Python list implementation and will also validate the type of elements that are about to be placed onto it.
+Such a list can be used in an application that requires the list elements to be of a specific type (integers in the ticketing example), and control over the types of elements 
+is given to the mechanisms of the new class. As a result, when solving a domain problem, we focus on the problem and not on type control.
+
+What is tightly coupled and loosely coupled code?
+Tight coupling refers to strong dependencies between components, making it challenging to modify or replace one component without affecting others. On the other hand, loose 
+coupling promotes decoupling between components, allowing for independent development, modification, and testing.
+
+Inheriting properties from built-in classes. Python gives you the ability to create a class that inherits properties from any Python built-in class in order to
+get a new class that can enrich the parent's attributes or methods. As a result, your newly-created class has the advantage of all of the well-known 
+functionalities inherited from its parent or even parents and you can still access those attributes and methods. Later, you can override the methods by 
+delivering your own modifications for the selected methods. In the following example, we’ll create an implementation of our own list class, which will only 
+accept elements of the integer type. But, wait – why might you need such an object? Imagine that you need to collect the serial numbers of sold tickets. 
+Sound reasonable enough?
+
+Your new class will be based on the Python list implementation and will also validate the type of elements that are about to be placed onto it. Such a list 
+can be used in an application that requires the list elements to be of a specific type (integers in the ticketing example), and control over the types of
+elements is given to the mechanisms of the new class. As a result, when solving a domain problem, we focus on the problem and not on type control.
+
+2.9.1.2 Inheriting properties from built-in classes // Look at the code presented in the editor pane. Something that’s worth commenting on is that we have 
+delivered:
+- a static, dedicated method for checking argument types. As we have delegated this responsibility to only one method, the code will be shorter, cleaner and 
+easier to maintain. We'll make use of this method a few times. In case the argument's type is not an integer, a ValueError exception is raised;
+- an overridden method __setitem__, which is a magic method (mind the underscores) responsible for inserting (overwriting) an element at a given position. This 
+method calls the check_value_type() method and later calls the genuine method __setitem__ which comes from the parent class, which does the rest of the job 
+(sets the validated value at a given position). Now you can sigh – “oh, what a great ability!”
+- an overridden method, append(), which is responsible for appending an element to the end of the list. This method follows the previous way of dealing with
+a new element;
+- an overridden method, extend(), to verify and add a collection of elements to the object.
+
+In the next example, we’ll create a class based on Python’s built-in dictionary, which will be equipped with logging mechanisms for details of writing and 
+reading operations performed on the elements of our dictionary. In other words, we are arming a Python dictionary with the ability to log details 
+(time and operation type) of:
+
+- class instantiation;
+- read access;
+- new element creation or update.
+
+A few notes for the code implementing the MonitoredDict class:
+- we have subclassed a dict class with a new __init__() method that calls the __init__() method from its super class. Additionally, it creates a list (self.log)
+that plays the role of a log book. Finally, the log book is populated with a message noting that the object has been created;
+- we have created the log_timestamp() method that appends crucial information to the self.log attribute;
+- we have overridden two methods inherent for the dictionary class (__getitem__() and __setitem__()) to deliver a richer implementation that logs activities. But
+don’t worry, we’re not losing anything from the parent dictionary class, because we’re still calling the corresponding methods.
+- As you run the code, you'll see that the new class is compatible with its parent, so you can use it in your applications that require activity tracking.
+
+class MonitoredDict(dict):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs) 
+#In the MonitoredDict class, super().__init__(*args, **kwargs) is called because MonitoredDict is inheriting from Python’s built-in dict class. 
+#This call ensures that the dict class is properly initialized with any arguments passed when creating an instance of MonitoredDict.
+        self.log = list()
+        self.log_timestamp('MonitoredDict created')
+
+The IBAN Only Dictionary. The “Integer only list” is an example of the employment of a subclassed built-in list to check the types of elements being added 
+to the list. How about checking the values of the keys being used when new elements are added to the dictionary?
+
+The standard says that validation requires the following steps (according to Wikipedia):
+(step 1) Check that the total IBAN length is correct as per the country (this program won't do that, but you can modify the code to meet this requirement 
+if you wish; note: you have to teach the code all the lengths used in Europe)
+(step 2) Move the four initial characters to the end of the string (i.e., the country code and the check digits)
+(step 3) Replace each letter in the string with two digits, thereby expanding the string, where A = 10, B = 11 ... Z = 35;
+(step 4) Interpret the string as a decimal integer and compute the remainder of that number on division by 97; If the remainder is 1, the check digit test
+is passed and the IBAN might be valid.
+
+Having a validateIBAN() function in place, we can write our own class that inherits after a built-in dict class.
+
+class IBANDict(dict):
+    def __setitem__(self, _key, _val):
+        if validateIBAN(_key):
+            super().__setitem__(_key, _val)
+
+    def update(self, *args, **kwargs):
+        for _key, _val in dict(*args, **kwargs).items():
+            self.__setitem__(_key, _val)
+
+In this implementation, we have delivered the method __setitem__() which calls validateIBAN() and on success calls the genuine __setitem__() method. This 
+piece of code is responsible for statements like:
+
+my_dict[key] = value
+
+We have also delivered the method update() which iterates the parameters passed, and for each correct pair calls the __setitem__() method.
+
+Summary:
+- Python allows you to subclass any built-in class such as a list, tuple, dictionary, and many others;
+- by subclassing the built-ins, you can easily adapt generics to provide more sophisticated features;
+- by subclassing the built-ins, you can modify only the parts (methods, attributes) that you intend to modify, while all remaining parts will behave a 
+good old built-ins.
+
+Advanced Exceptions: In this module, we'll talk about Python exceptions – objects that represent errors which occur during the execution of a program 
+that disrupts the normal flow of the  program's instructions.  Exceptions - short introduction. When Python executes a script and encounters a situation 
+that it cannot cope with, it:
+
+- stops your program;
+- creates a special kind of data, called an exception. Of course, this exception is an object.
+- Both of these activities are called raising an exception. We can say that Python always raises an exception (or that an exception has been raised) when 
+it has no idea what do to with your code.
+
+Both of these activities are called raising an exception. We can say that Python always raises an exception (or that an exception has been raised) when it has no idea what do to with your code.
+
+What happens next?  the raised exception expects somebody or something to notice it and take care of it;
+if nothing happens to take care of the raised exception, the program will be forcibly terminated, and you will see an error message sent to the console by Python;
+otherwise, if the exception is taken care of and handled properly, the suspended program can be resumed and its execution can continue.
+Python provides effective tools that allow you to observe exceptions, identify them and handle them efficiently. This is possible due to the fact that all potential exceptions have their unambiguous names, so you can categorize them and react appropriately.
+
+You may already have met an exception error message like the following:
+IndexError: list index out of range
+
+Python comes with 63* built-in exceptions, and they can be represented in the form of a tree-shaped hierarchy. The reason for this is that exceptions are inherited from BaseException,
+the most general exception class.  And this approach tells you that you can also create your own specific exception classes – the only constraint is: you have 
+to subclass BaseException or any other derived exception class.
+
+Exception handling. When you suspect that the code may raise an exception, you should use the try: problematic_code except code block to surround
+the "problematic" piece of code. In effect, when the exception is raised, execution is not terminated, but the code following the  except clause will 
+try to handle the problem in an elegant way. Let's look at typical try ... except statement.
+
+try:
+    print(int('a'))
+except ValueError:
+    print('You tried to do a nasty thing...')
+
+Whenever you try to convert letter 'a' to an integer value, you'll spot an exception. In the case where you get data from an external source 
+(console, file, etc.) you should not trust the data types, so it’s wise to surround the fragile code (int() in this example) with a try... except block.
+
+Advanced exceptions - named attributes
+Now it’s time to dive more deeply into the interesting features of exception concepts and get familiar with the possible ways of using those concepts in your 
+applications. Once again, let's look at a typical try ... except statement.
+
+try:
+    print(int('a'))
+except ValueError as e_variable:
+    print(e_variable.args)
+
+The except clause may specify a variable after the exception name. In this example it’s an e_variable. This variable is bound to an exception instance with 
+the arguments stored in the args attribute of the e_variable object. Some exception objects carry additional information about the exception itself.
+The ImportError exception – raised when the import statement has trouble trying to load a module. The attributes are:
+
+name – represents the name of the module that was attempted to be imported;
+path – represents the path to any file which triggered the exception, respectively. Could be None.
+See the output of this snippet to analyze the attributes' values.
+
+The UnicodeError exception – raised when a Unicode-related encoding or decoding error occurs. It is a subclass of ValueError.
+The UnicodeError has attributes that describe an encoding or decoding error.
+
+encoding – the name of the encoding that raised the error.
+reason – a string describing the specific codec error.
+object – the object the codec was attempting to encode or decode.
+start – the first index of invalid data in the object.
+end – the index after the last invalid data in the object.
+See the output of this snippet to analyze the attributes' values.
+
+What are chained exceptions?
+Python 3 introduced a very interesting feature called 'Exception chaining' to effectively deal with exceptions.
+
+Imagine a situation where you are already handling an exception and your code incidentally triggers an additional exception. Should your code lose the 
+information about the previous exception? Of course not. So the information should be available to the code following the erroneous code. This is an 
+example of implicit chaining. Another case pops up when we knowingly wish to handle an exception and translate it to another type of exception. Such a 
+situation is typical when you have a good reason for the unifying behavior of one piece of code to act similarly to another piece of code, like a legacy 
+code. In this situation it would also be nice to keep the details of the former exception. This is an example of explicit chaining.
+
+This chaining concept introduces two attributes of exception instances:
+- the __context__ attribute, which is inherent for implicitly chained exceptions;
+- the __cause__ attribute, which is inherent for explicitly chained exceptions.
+- Those attributes help the programmer to keep a reference to the original exception object in a handy and consistent way for later processing like logging, etc.
+
+Look at the following code and the output traceback. Pay attention to the fact that we are not raising any exception explicitly with a raise statement, but we cause it implicitly (BTW: dividing by 0 is always a good way to cause an exception or error in most of the programming languages):
+
+Traceback (most recent call last):
+  File "exceptions#030.py", line 6, in <module>
+    print(a_list[3])
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred: #<<<<<<<<<<<<<<<
+
+Traceback (most recent call last):
+  File "exceptions#030.py", line 8, in <module>
+    print(1 / 0)
+ZeroDivisionError: division by zero
+
+The original exception object e is now being referenced by the __context__ attribute of the following exception f.
+
+Inner exception (f): division by zero
+Outer exception (e): list index out of range
+Outer exception referenced: list index out of range
+Is it the same object: True
+output
+
+The except Exception clause is a wide one and normally should be used as a last resort to catch all unhandled exceptions. It’s so wide because we don’t know 
+what kind of exception might occur. So, when a subsequent exception (much better forecasted) occurs, we still can say a lot about the nature of the first 
+exception. Advanced exceptions - explicitly chained exceptions This time we'd like to convert an explicit type of exception object to another type of 
+exception object at the moment when the second exception is occurring.  Imagine that your code is responsible for the final checking process before the 
+rocket is launched. The list of checks is a long one, and different checks could result in different exceptions.
+
+But as it is a very serious process, you should be sure that all checks are passed. If any fails, it should be marked in the log book and re-checked next time.
+
+Now you see that it would be convenient to convert each type of exception into its own exception (like RocketNotReadyError) and to log the origin of the exception.
+
+Final check procedure
+        The captain's name is John
+        The pilot's name is Mary
+        The mechanic's name is Mike
+Traceback (most recent call last):
+  File "exceptions#050.py", line 10, in personnel_check
+    print("\tThe navigator's name is", crew[3])
+IndexError: list index out of range
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "exceptions#050.py", line 19, in 
+    personnel_check()
+  File "exceptions#050.py", line 12, in personnel_check
+    raise RocketNotReadyError('Crew is incomplete') from e
+__main__.RocketNotReadyError: Crew is incomplete
+output
+
+Once again, the result of the code execution contains an interesting piece of information indicating that we have just witnessed a chain of exceptions:
+The above exception was the direct cause of the following exception. To catch the cause of the RocketNotReadyError exception, you should access 
+the __cause__ attribute of the RocketNotReadyError object. Run the code in the right pane and examine the output.
+
+This time the report is handled in a safe way, and you can be sure that you’re doing a good job.
+
+class RocketNotReadyError(Exception):
+    pass
+
+
+def personnel_check():
+    try:
+        print("\tThe captain's name is", crew[0])
+        print("\tThe pilot's name is", crew[1])
+        print("\tThe mechanic's name is", crew[2])
+        print("\tThe navigator's name is", crew[3])
+    except IndexError as e:
+        raise RocketNotReadyError('Crew is incomplete') from e
+
+crew = ['John', 'Mary', 'Mike']
+print('Final check procedure')
+
+try:
+    personnel_check()
+except RocketNotReadyError as f:
+    print('General exception: "{}", caused by "{}"'.format(f, f.__cause__))
+
+Final check procedure
+        The captain's name is John
+        The pilot's name is Mary
+        The mechanic's name is Mike
+General exception: "Crew is incomplete", caused by "list index out of range"
+
+3.1.1.11 Advanced exceptions - explicitly chained exceptions
+
+Pay attention to the fact that thanks to polymorphism and explicit chaining, our approach has become more generic: we are able to run two different checks, 
+each returning a different exception type. And we’re still able to handle them correctly, as we’re hiding some details behind the RocketNotReadyError 
+exception object.
+
+class RocketNotReadyError(Exception):
+    pass
+
+def personnel_check():
+    try:
+        print("\tThe captain's name is", crew[0])
+        print("\tThe pilot's name is", crew[1])
+        print("\tThe mechanic's name is", crew[2])
+        print("\tThe navigator's name is", crew[3])
+    except IndexError as e:
+        raise RocketNotReadyError('Crew is incomplete') from e
+
+def fuel_check():
+    try:
+        print('Fuel tank is full in {}%'.format(100 / 0))
+    except ZeroDivisionError as e:
+        raise RocketNotReadyError('Problem with fuel gauge') from e
+
+crew = ['John', 'Mary', 'Mike']
+fuel = 100
+check_list = [personnel_check, fuel_check]
+
+print('Final check procedure')
+
+for check in check_list:
+    try:
+        check()
+    except RocketNotReadyError as f:
+        print('RocketNotReady exception: "{}", caused by "{}"'.format(f, f.__cause__))
+
+Final check procedure
+        The captain's name is John
+        The pilot's name is Mary
+        The mechanic's name is Mike
+RocketNotReady exception: "Crew is incomplete", caused by "list index out of range"
+RocketNotReady exception: "Problem with fuel gauge", caused by "division by zero"
+
+Advanced exceptions - the traceback attribute. Each exception object owns a __traceback__ attribute.
+Python allows us to operate on the traceback details because each exception object (not only chained ones) owns a __traceback__ attribute.
+
+Final check procedure
+        The captain's name is John
+        The pilot's name is Mary
+        The mechanic's name is Mike
+<traceback object at 0x00753300>
+<class 'traceback'>
+
+From the output presented on the previous page, we can conclude that we have to deal with a traceback type object. To achieve this, we could use the format_tb() 
+method delivered by the built-in traceback module to get a list of strings describing the traceback. We could use the print_tb() method, also delivered by the 
+traceback module, to print strings directly to the standard output.
+
+import traceback
+try:
+    personnel_check()
+except RocketNotReadyError as f:
+    print(f.__traceback__)
+    print(type(f.__traceback__))
+    print('\nTraceback details')
+    details = traceback.format_tb(f.__traceback__)
+    print("\n".join(details))
+
+print('Final check is over')
+
+In real life development projects, you may make use of logged tracebacks after comprehensive test sessions to gather statistics or even automate bug reporting processes.
+
+Copying objects using shallow and deep operations. In this module, you’ll learn how to copy Python objects. Specifically, you'll learn about:
+
+object: label vs. identity vs. value;
+the id() function and the is operand;
+shallow and deep copies of the objects.
+
+It’s hard to imagine writing a piece of Python code that performs any kind of data processing without making use of variables. As variables are fundamental elements that 
+allow us to cope with objects, let's talk in detail about variables and objects, and possible ways of copying them. When you spot the following clause:
+
+a_list = [ 1, 'New York', 100]
+a_list variable (label)
+= assigned to (reference to)
+object (can consist of other objects)
+
+(Note that an assignment statement is being used, so evaluation of the right side of the clause takes precedence over the left side.)
+
+At first, an object (a list in this example) is created in the computer's memory. Now the object has its identity;
+then the object is populated with other objects. Now our object has a value;
+finally a variable, which you should treat as a label or name binding, is created, and this label refers to a distinct place in the computer memory.
+
+What is that object 'identity'? Why are the object value and label not enough? The built-in id() function returns the 'identity' of an object. This is an 
+integer which is guaranteed to be unique and constant for this object during its lifetime. Two objects with non-overlapping lifetimes may have the same id() value.
+CPython implementation detail: This is the address of the object in the memory. Don’t treat it as an absolute memory address.
+Run the code presented in the right pane to see how the strings are located in the memory.
+
+Remember that the memory addresses are different:
+
+a_string identity: 8466656
+b_string identity: 8466704
+
+This function is rarely used in applications. More often you’ll use it to debug the code or to experiment while copying objects. The side effect of this infrequent 
+use is that some developers forget about its existence and create their own variables titled id to store some kind of identity or identifier.
+As a result, a variable called id shadows the genuine function and makes it unreachable in the scope in which the variable has been defined. You should remember 
+to avoid such situations!
+
+When you have two variables referring to the same object, the return values of the id() function must be the same. Run the code presented in the right pane to 
+confirm our speculations:
+
+a_string identity: 8466704
+b_string identity: 8466704
+
+In this example, we haven’t created a new list, but just created a new label that references the already created list.
+
+What is the difference between the '==' and 'is' operators? What should you do to compare two objects? In order to compare two objects, you should start with the '==' 
+operator as usual. This operator compares the values of both operands and checks for value equality. So here we witness a values comparison.
+In fact, two distinct objects holding the same values could be compared, and the result would be 'True'. Moreover, when you compare two variables referencing the same 
+object, the result would be also 'True'. To check whether both operands refer to the same object or not, you should use the 'is' operator. In other words, it responds 
+to the question: “Are both variables referring to the same identity?”
+
+When you process the data, you’ll come to the point where you may want to have distinct copies of objects that you can modify without automatically modifying the original at the same time.
+Let's have a look at the following code. Its intention is to:
+
+make a real, independent copy of a_list, (not just a copy reference). Using [:], which is an array slice syntax, we get a fresh copy of the a_list object;
+modify the original object;
+see the contents of both objects.
+Pay attention to the code presented in the right pane, of which a_list is a compound object (an object that contains other objects, like lists, dictionaries, or class instances).
+
+print("Part 1")
+print("Let's make a copy")
+a_list = [10, "banana", [997, 123]]
+b_list = a_list[:]
+print("a_list contents:", a_list)
+print("b_list contents:", b_list)
+print("Is it the same object?", a_list is b_list)
+
+print()
+print("Part 2")
+print("Let's modify b_list[2]")
+b_list[2][0] = 112
+print("a_list contents:", a_list)
+print("b_list contents:", b_list)
+print("Is it the same object?", a_list is b_list)
+
+The explanation of the behavior presented on the previous page is: the 'a_list' object is a compound object;
+we’ve run a shallow copy that constructs a new compound object, b_list in our example, and then populated it with references to the objects found in the original;
+as you can see, a shallow copy is only one level deep. The copying process does not recurse and therefore does not create copies of the child objects, but instead populates b_list with references to the already existing objects.
+
+
+If you want to make an independent copy of a compound object (list, dictionary, custom class instance) you should make use of deep copy, which:
+constructs a new compound object and then, recursively, inserts copies into it of the objects found in the original;
+takes more time to complete, as there are many more operations to be performed;
+is implemented by the deepcopy() function, delivered by the python 'copy' module
+
+The 'copy' module contains a function for shallow copying: copy(). Of course, you could say that for copying lists there is already the [:] notation, or a_list=list(b_list), and for 
+dictionaries you could use a_dict = dict(b_dict). But think about making use of polymorphism when you need a universal function to copy any type object, so that in that case using a 
+copy() function is the smart way to accomplish the task.
+
+In the following example, we'll compare the performance of three ways of copying a large compound object (a million three-element tuples).
+The first approach is a simple reference copy. This is done very quickly, as there’s nearly nothing to be done by the CPU – just a copy of a reference to 'a_list'.
+The second approach is a shallow copy. This is slower than the previous code, as there are 1,000,000 references (not objects) created.
+The third approach is a deep copy. This is the most comprehensive operation, as there are 3,000,000 objects created.
+
+import copy
+import time
+
+a_list = [(1,2,3) for x in range(1_000_000)]
+
+print('Single reference copy')
+time_start = time.time()
+b_list = a_list
+print('Execution time:', round(time.time() - time_start, 3))
+print('Memory chunks:', id(a_list), id(b_list))
+print('Same memory chunk?', a_list is b_list)
+
+print()
+
+print('Shallow copy')
+time_start = time.time()
+b_list = a_list[:]
+print('Execution time:', round(time.time() - time_start, 3))
+print('Memory chunks:', id(a_list), id(b_list))
+print('Same memory chunk?', a_list is b_list)
+
+print()
+
+print('Deep copy')
+time_start = time.time()
+b_list = copy.deepcopy(a_list)
+print('Execution time:', round(time.time() - time_start, 3))
+print('Memory chunks:', id(a_list), id(b_list))
+print('Same memory chunk?', a_list is b_list)
+
+----- chatgpt
+In Python, copying an object can be done in three ways: simple reference copy, shallow copy, and deep copy. Each method affects how changes to the
+original object impact the copied object.
+
+1. Simple Reference Copy
+When you assign an object to a new variable, no new object is created.  Instead, the new variable just points to the same memory location as the original object.
+
+Example:
+
+a = [1, 2, 3]
+b = a  # Reference copy
+
+b.append(4)
+
+print(a)  # [1, 2, 3, 4]  (Both variables point to the same object)
+print(b)  # [1, 2, 3, 4]
+Behavior: Since b is just another reference to a, modifying b also affects a.
+
+
+2. Shallow Copy
+A new object is created, but only the top-level elements are copied. If the object contains nested objects (e.g., lists inside lists), 
+the references to those nested objects are copied, not their actual contents.
+
+Example using copy.copy():
+import copy
+import copy
+
+a = [[1, 2], 3]
+b = copy.copy(a)  # Shallow copy
+
+b[0].append(99)  # Modifies a nested list inside `b`
+b.append(4)
+
+print(a)  # [[1, 2, 99], 3] (Original object also changes)
+print(b)  # [[1, 2, 99], 3, 4]
+
+3. Deep Copy
+A new object is created, and all nested objects are also fully copied. Changes in the copied object do not affect the original object.
+
+Example using copy.deepcopy():
+
+import copy
+
+a = [[1, 2], [3, 4]]
+b = copy.deepcopy(a)  # Deep copy
+
+b[0].append(99)  # Modify only the copied list
+
+print(a)  # [[1, 2], [3, 4]]  (Original remains unchanged)
+print(b)  # [[1, 2, 99], [3, 4]]
+Behavior: Since deepcopy() creates independent copies of nested objects, modifying b does not affect a.
+----- chatgpt end.
+
+The explanation of the behavior presented on the previous page is:
+
+the 'a_list' object is a compound object;
+we’ve run a shallow copy that constructs a new compound object, b_list in our example, and then populated it with references to the objects 
+found in the original; as you can see, a shallow copy is only one level deep. The copying process does not recurse and therefore does not 
+create copies of the child objects, but instead populates b_list with references to the already existing objects.
+
+If you want to make an independent copy of a compound object (list, dictionary, custom class instance) you should make use of deep copy, which:
+constructs a new compound object and then, recursively, inserts copies into it of the objects found in the original;
+takes more time to complete, as there are many more operations to be performed;
+is implemented by the deepcopy() function, delivered by the python 'copy' module
+
+see 4.1.1.8 Shallow and deep copy operations for graphical representation 
+
+The 'copy' module contains a function for shallow copying: copy(). Of course, you could say that for copying lists there is already the [:] notation, 
+or a_list=list(b_list), and for dictionaries you could use a_dict = dict(b_dict). But think about making use of polymorphism when you need a universal
+function to copy any type object, so that in that case using a copy() function is the smart way to accomplish the task.
+
+#copy.copy(obj) (shallow copy) and copy.deepcopy(obj) (deep copy) are polymorphic functions—they automatically adapt to the object type.
+
+Example Without Polymorphism (Manual Approach)
+If we were to manually handle different types, we'd need to write something like:
+
+def manual_copy(obj):
+    if isinstance(obj, list):
+        return obj[:]  # List slicing (shallow copy)
+    elif isinstance(obj, dict):
+        return obj.copy()  # Dictionary's copy method
+    elif isinstance(obj, set):
+        return obj.copy()  # Set's copy method
+    else:
+        raise TypeError("Unsupported type")
+This is not scalable—for every new object type, we must modify the function.
+
+In the following example, we'll compare the performance of three ways of copying a large compound object (a million three-element tuples).
+The first approach is a simple reference copy. This is done very quickly, as there’s nearly nothing to be done by the CPU – just a copy of a reference 
+to 'a_list'. The second approach is a shallow copy. This is slower than the previous code, as there are 1,000,000 references (not objects) created.
+The third approach is a deep copy. This is the most comprehensive operation, as there are 3,000,000 objects created.
+
+The same deepcopy() method could be utilized when you want to copy dictionaries or custom class objects.
+
+Section summary Important things to remember:
+
+the deepcopy() method creates and persists new instances of source objects, whereas any shallow copy operation only stores references to the original memory address;
+a deep copy operation takes significantly more time than any shallow copy operation;
+the deepcopy() method copies the whole object, including all nested objects; it’s an example of practical recursion taking place;
+deep copy might cause problems when there are cyclic references in the structure to be copied.
+
+4.2.1.1 Serialization of Python objects using the pickle module
+
+Serialization of Python objects using the pickle module. In this section, you will learn how to persist Python objects for later use.
+Pickling is the process of preserving or extending the lifespan of food. The resulting food is called a pickle, and to prevent ambiguity, prefaced 
+with the 'pickled' adjective.
+
+Have you ever considered saving the output of your data processing for later use? The simplest way to persist outcomes is to generate a flat text file 
+and to write your outcomes. It’s a very simple thing to do way which is not suitable for persisting sets of different types of objects or nested structures.
+
+In Python, object serialization is the process of converting an object structure into a stream of bytes to store the object in a file or database, or to 
+transmit it via a network. This byte stream contains all the information necessary to reconstruct the object in another Python script.
+This reverse process is called deserialization. Python objects can also be serialized using a module called 'pickle', and using this module, you can 
+'pickle' your Python objects for later use. The 'pickle' module is a very popular and convinient module for data serialization in the world of Pythonistas.
+
+So, what can be pickled and then unpickled? The following types can be pickled:
+
+None, booleans;
+integers, floating-point numbers, complex numbers;
+strings, bytes, bytearrays;
+tuples, lists, sets, and dictionaries containing pickleable objects;
+objects, including objects with references to other objects (remember to avoid cycles!)
+references to functions and classes, but not their definitions.
+
+Let's pickle our first set of data consisting of:
+a nested dictionary carrying some information about currencies;
+a list containing a string, an integer, and a list.
+
+The code starts with the import statement responsible for loading the pickle module:
+
+import pickle
+
+Later you can see that the file handle 'file_out' is associated with the file opened for writing in binary mode. It’s important to open the file in binary mode as we are dumping data as a stream of bytes.
+
+with open('multidata.pckl', 'wb') as file_out:
+
+Now it’s time to persist the first object with the dump() function. This function expects an object to be persisted and a file handle.
+
+pickle.dump(a_dict, file_out)
+
+Now it’s time to unpickle the contents of the file.
+
+The presented code is quite simple:
+
+we’re importing a pickle module;
+the file is opened in binary mode and the file handle is associated with the file;
+we consecutively read some portions of data and deserialize it with the load() function;
+finally, we examine the type and contents of the objects.
+Pay attention to the fact that with the 'pickle' module, you have to remember the order in which the objects were persisted and the deserialization code 
+should follow the same order.
+
+At the beginning of the serialization module, we mentioned that serialized objects could be persisted in a database or sent via a network. This implies another 
+two functions corresponding to the pickle.dumps() and pickle.loads() functions:
+
+pickle.dumps(object_to_be_pickled) – expects an initial object, returns a byte object. This byte object should be passed to a database or network driver to persist the data;
+pickle.loads(bytes_object) – expects the bytes object, returns the initial object.
+An example of in situ serialization and deserialization is presented in the right pane.
+
+Remember that attempts to pickle non-pickleable objects will raise the PicklingError exception.
+Trying to pickle a highly recursive data structure (mind the cycles) may exceed the maximum recursion depth, and a RecursionError exception will be raised in such cases.
+Note that functions (both built-in and user-defined) are pickled by their name reference, not by any value. This means that only the function name is pickled; neither the function’s code, nor any of its function attributes, are pickled.
+Similarly, classes are pickled by named reference, so the same restrictions in the unpickling environment apply. Note that none of the class’s code or data are pickled.
+
+This is done on purpose, so you can fix bugs in a class or add methods to the class, and still load objects that were created with an earlier version of the class.
+Hence, your role is to ensure that the environment where the class or function is unpickled is able to import the class or function definition. In other words, the function or class must be available in the namespace of your code reading the pickle file.
+Otherwise, an AtrributeError exception will be raised.
+
+The following code demonstrates the situation for function definition pickling:
+
+import pickle
+
+def f1():
+    print('Hello from the jar!')
+
+with open('function.pckl', 'wb') as file_out:
+    pickle.dump(f1, file_out)
+
+We see no errors, so we might conclude that f1() was pickled successfully, and now we can retrieve it from the file.
+
+import pickle
+
+with open('function.pckl', 'rb') as file_in:
+    data = pickle.load(file_in)
+
+print(type(data))
+print(data)
+data()
+
+Traceback (most recent call last):
+  File "main.py", line 4, in <module>
+    data = pickle.load(file_in)
+AttributeError: Can't get attribute 'f1' on <module '__main__' from 'main.py'>
+
+#Note that functions (both built-in and user-defined) are pickled by their name reference, not by any value. This means that only the function name is pickled; neither the function’s code, nor any of its function attributes, are pickled.
+
+Here’s the same example regarding class definition and object pickling:
+
+import pickle
+
+class Cucumber:
+    def __init__(self):
+        self.size = 'small'
+
+    def get_size(self):
+        return self.size
+
+cucu = Cucumber()
+
+with open('cucumber.pckl', 'wb') as file_out:
+    pickle.dump(cucu, file_out)
+
+We see no errors, so we might conclude that the Cucumber class and object were pickled successfully, and now we can retrieve them from the file. In fact, only the object is persisted but not its definition allowing us to determine the attribute layout:
+
+If you run the code, you receive:
+
+Traceback (most recent call last):
+  File "main.py", line 4, in <module>
+    data = pickle.load(file_in)
+AttributeError: Can't get attribute 'Cucumber' on <module '__main__' from 'main.py'>
+output
+
+The remedy for the above problems is: the code that calls the load() or loads() functions of pickle should already know the function/class definition.
+A few additional words about the pickle module:
+
+it’s a Python implementation of the serialization process, so the pickled data cannot be exchanged with programs written in other languages like Java or C++. In such cases, you should think about the JSON or XML formats, which could be less convenient than pickling, but when assimilated are more powerful than pickling;
+the pickle module is constantly evolving, so the binary format may differ between different versions of Python. Pay attention that both serializing and deserializing parties are making use of the same pickle versions;
+the pickle module is not secured against erroneous or maliciously constructed data. Never unpickle data received from an untrusted or unauthenticated source.
+
+Serialization of Python objects using the shelve module. As you remember, the pickle module is used for serializing objects as a single byte stream. Both serializing and deserializing parties must abide by the order of all the elements placed into a file or database, or sent via a network.
+There is another handy module, called shelve, that is built on top of pickle, and implements a serialization dictionary where objects are pickled and associated with a key. The keys must be ordinary strings, because the underlying database (dbm) requires strings.
+Therefore, you can open your shelved data file and access your pickled objects via the keys the way you do when you access Python dictionaries. This could be more convenient for you when you’re serializing many objects.
+
+Using shelve is quite easy and intuitive. First, let's import the appropriate module and create an object representing a file-based database:
+
+import shelve
+my_shelve = shelve.open('first_shelve.shlv', flag='w')
+
+The meaning of the optional flag parameter:
+
+Value	Meaning
+'r'	Open existing database for reading only
+'w'	Open existing database for reading and writing
+'c'	Open database for reading and writing, creating it if it doesn’t exist (this is a default value)
+'n'	Always create a new, empty database, open for reading and writing
+Now our shelve object is ready for action, so let's insert a few items and close the shelve object.
+
+my_shelve['USD'] = {'code':'US dollar', 'symbol': '$'}
+my_shelve['JPY'] = {'code':'Japanese yen', 'symbol': '¥'}
+my_shelve.close()
+
+Now let's open the shelve file to demonstrate direct access to the elements (contrary to the sequential access to items when we use pickles).
+
+new_shelve = shelve.open(shelve_name)
+print(new_shelve['USD'])
+new_shelve.close()
+
+You should treat a shelve object as a Python dictionary, with a few additional notes:
+
+the keys must be strings;
+Python puts the changes in a buffer which is periodically flushed to the disk. To enforce an immediate flush, call the sync() method on your shelve object;
+when you call the close() method on an shelve object, it also flushes the buffers.
+When you treat a shelve object like a Python dictionary, you can make use of the dictionary utilities:
+
+the len() function;
+the in operator;
+the keys() anditems() methods;
+the update operation, which works the same as when applied to a Python dictionary;
+the del instruction, used to delete a key-value pair.
+
+After running the code, you'll notice additionally that some files are created to support the database. Don’t try to alter those files with external utilities, because your shelve may become inconsistent, resulting in read/write errors.
+The use of shelve is really easy and effective. Moreover, you should know that you could simulate the shelve by pickling the whole dictionary, but the shelve module uses the memory more efficiently, so whenever you need access to pickled objects, employ a shelve.
+And the final remark is: because the shelve module is backed by pickle, it isn’t safe to load a shelve from an untrusted source. As with pickle, loading a shelve can execute arbitrary code.
+
+5.1.1.1 Metaprogramming
+
+Introduction to metaclasses. Metaprogramming is a programming technique in which computer programs have the ability to modify their own or other programs’ codes. It may sound like an idea from a science fiction story, but the idea was born and implemented in the early 1960s.
+For Python, code modifications can occure while the code is being executed, and you might have already experienced it while implementing decorators, overriding operators, or even implementing the properties protocol.
+It may look like syntactic sugar, because in many cases metaprogramming allows programmers to minimize the number of lines of code to express a solution, in turn reducing development time.
+But the truth is that this technique could be used for tool preparation; those tools could be applied to your code to make it follow specific programming patterns, or to help you create a coherent API (Application Programming Interface).
+Another example of metaprogramming is the metaclass concept, which is one of the most advanced concepts presented in this course.
+
+Tim Peters, the Python guru who authored the Zen of Python, expressed his feelings about metaclasses in the comp.lang.python newsgroup on 12/22/2002:
+[metaclasses] are deeper magic than 99% of users should ever worry about. If you wonder whether you need them, you don't (the people who actually need them know with certainty that they need them, and don't need an explanation about why).
+Don’t worry, we'll touch on the “deeper magic” in a benign way. Understanding Python metaclasses is worthwhile, because it leads to a better understanding of what is happening under Python's hood when classes are created.
+
+In Python, a metaclass is a class whose instances are classes. Just as an ordinary class defines the behavior of certain objects, a metaclass allows for the customization of class instantiation.
+The functionality of the metaclass partly coincides with that of class decorators, but metaclasses act in a different way than decorators:
+decorators bind the names of decorated functions or classes to new callable objects. Class decorators are applied when classes are instantiated;
+metaclasses redirect class instantiations to dedicated logic, contained in metaclasses. Metaclasses are applied when class definitions are read to create classes, well before classes are instantiated.
+
+Metaclasses usually enter the game when we program advanced modules or frameworks, where a lot of precise automation must be provided.
+The typical use cases for metaclasses:
+
+logging;
+registering classes at creation time;
+interface checking;
+automatically adding new methods;
+automatically adding new variables.
+
+
+In Python's approach, everything is an object, and every object has some type associated with it. To get the type of any object, make use of the type() function.
+Run the code in the right pane to see the type() function in action.
+
+class Dog:
+    pass
+
+age = 10
+codes = [33, 92]
+dog = Dog()
+
+print(type(age))
+print(type(codes))
+print(type(dog))
+print(type(Dog))
+
+<class 'int'>
+<class 'list'>
+<class '__main__.Dog'>
+<class 'type'>
+output
+
+We can see that objects in Python are defined by their inherent classes. The example also shows that we can create our own classes, and those classes will be instances of the type special class, which is the default metaclass responsible for creating classes.
+Let's perform one more experiment that will respond to the question: what type of objects are built-in classes and the metaclass type?
+
+for t in (int, list, type):
+    print(type(t))
+
+The results are quite interesting:
+
+<class 'type'>
+<class 'type'>
+<class 'type'>
+
+These observations lead us to the following conclusions:
+
+metaclasses are used to create classes;
+classes are used to create objects;
+the type of the metaclass type is type – no, that is not a typo.
+
+To extend the above observations, it’s important to add:
+type is a class that generates classes defined by a programmer;
+metaclasses are subclasses of the type class.
+Before we start creating our own metaclasses, it’s important to understand some more details regarding classes and the process of creating them.
+
+We should get familiar with some special attributes:
+
+__name__ – inherent for classes; contains the name of the class;
+__class__ – inherent for both classes and instances; contains information about the class to which a class instance belongs;
+__bases__ – inherent for classes; it’s a tuple and contains information about the base classes of a class;
+__dict__ – inherent for both classes and instances; contains a dictionary (or other type mapping object) of the object's attributes.
+The output of the code presented in the right pane:
+
+class Dog:
+    pass
+
+dog = Dog()
+print('"dog" is an object of class named:', Dog.__name__)
+print()
+print('class "Dog" is an instance of:', Dog.__class__)
+print('instance "dog" is an instance of:', dog.__class__)
+print()
+print('class "Dog" is  ', Dog.__bases__)
+print()
+print('class "Dog" attributes:', Dog.__dict__)
+print('object "dog" attributes:', dog.__dict__)
+
+"dog" is an object of class named: Dog
+
+class "Dog" is an instance of: <class 'type'>
+instance "dog" is an instance of: <class '__main__.Dog'>
+
+class "Dog" is   (<class 'object'>,)
+
+class "Dog" attributes: {'__module__': '__main__', '__dict__': <attribute '__dict__' of 'Dog' objects>, '__weakref__': <attribute '__weakref__' of 'Dog' objects>, '__doc__': None}
+object "dog" attributes: {}
+
+The same information stored in __class__could be retrieved by calling a type() function with one argument:
+
+for element in (1, 'a', True):
+    print(element, 'is', element.__class__, type(element))
+
+The results are:
+
+1 is <class 'int'> <class 'int'>
+a is <class 'str'> <class 'str'>
+True is <class 'bool'> <class 'bool'>
+
+When the type() function is called with three arguments, then it dynamically creates a new class.
+
+For the invocation of type(, , ):
+
+the argument specifies the class name; this value becomes the __name__ attribute of the class;
+the argument specifies a tuple of the base classes from which the newly created class is inherited; this argument becomes the __bases__ attribute of the class;
+the argument specifies a dictionary containing method definitions and variables for the class body; the elements of this argument become the __dict__ attribute of the class and state the class namespace.
+A very simple example, when both bases and dictionary are empty, is presented in the right pane.
+
+Dog = type('Dog', (), {})
+
+print('The class name is:', Dog.__name__)
+print('The class is an instance of:', Dog.__class__)
+print('The class is based on:', Dog.__bases__)
+print('The class attributes are:', Dog.__dict__)
+
+As a result, we have created the simple class “Dog”. 
+
+The more complex example that dynamically creates a fully functional class is presented in the right pane.
+As you can see, the Dog class is now equipped with two methods (feed() and bark()) and the instance attribute age.
+
+def bark(self):
+    print('Woof, woof')
+
+class Animal:
+    def feed(self):
+        print('It is feeding time!')
+
+Dog = type('Dog', (Animal, ), {'age':0, 'bark':bark})
+
+print('The class name is:', Dog.__name__)
+print('The class is an instance of:', Dog.__class__)
+print('The class is based on:', Dog.__bases__)
+print('The class attributes are:', Dog.__dict__)
+
+doggy = Dog()
+doggy.feed()
+doggy.bark()
+
+The class name is: Dog
+The class is an instance of: <class 'type'>
+The class is based on: (<class '__main__.Animal'>,)
+The class attributes are: {'age': 0, 'bark': <function bark at 0x00000180C43E4E58>, '__module__': '__main__', '__doc__': None}
+It is feeding time!
+Woof, woof
+output
+This way of creating classes, using the type function, is substantial for Python's way of creating classes using the class instruction:
+
+after the class instruction has been identified and the class body has been executed, the class = type(, , ) code is executed;
+the type is responsible for calling the __call__ method upon class instance creation; this method calls two other methods:
+__new__(), responsible for creating the class instance in the computer memory; this method is run before __init__();
+__init__(), responsible for object initialization.
+
+Metaclasses usually implement these two methods (__init__, __new__), taking control of the procedure of creating and initializing a new class instance. Classes receive a new layer of logic.
+
+Now that we know what’s happening under Python's hood, it’s time to implement our own metaclass. It’s important to remember that metaclasses are classes that are instantiated to get classes.
+The first step is to define a metaclass that derives from the type type and arms the class with a 'custom_attribute', as follows:
+
+class My_Meta(type):
+    def __new__(mcs, name, bases, dictionary):
+        obj = super().__new__(mcs, name, bases, dictionary)
+        obj.custom_attribute = 'Added by My_Meta'
+        return obj
+
+Pay attention to the fact that:
+
+the class My_Meta is derived from type. This makes our class a metaclass;
+our own __new__ method has been defined. Its role is to call the __new__ method of the parent class to create a new class;
+__new__ uses 'mcs' to refer to the class – it’s just a convention;
+a class attribute is created additionally;
+the class is returned.
+Let's make use of the metaclass to create our own, domain-specific class, and check if it’s armed with the custom attribute:
+
+class My_Object(metaclass=My_Meta):
+    pass
+
+print(My_Object.__dict__)
+
+Pay attention to the fact that: a new class has been defined in a way where a custom metaclass is listed in the class definition as a metaclass. This is a way to tell Python to use My_Meta as a metaclass, not as an ordinary superclass;
+we are printing the contents of the class __dict__ attribute to check if the custom attribute is present.
+
+{'__module__': '__main__', '__dict__': <attribute '__dict__' of 'My_Object' objects>, '__weakref__': <attribute '__weakref__' of 'My_Object' objects>, '__doc__': None, 'custom_attribute': 'Added by My_Meta'}
+
+Metaprogramming – another metaclass. Let's run a more serious experiment: try to build a metaclass responsible for completing classes with a method (if missing) to ensure that all your classes are equipped with a method named 'greetings'.
+As you can see, there is a greetings() function defined that greets everyone who interacts with it. In a real-life scenario, it could be a function that is obligatory for every class and is responsible for the consistency of object attributes; it could be a function returning a checksum for some of an attribute's values.
+In My_Class1, by design, there is no greetings function, so when the class is constructed, it is equipped with a default function by the metaclass.
+In contrast, in My_Class2 the greetings function is present from the very beginning.
+Both classes rely on the same metaclass. When you run the code, you'll see that both class instances are equipped with greetings() methods. For the “poorer” class, it is completed by the metaclass.
+
+def greetings(self):
+    print('Just a greeting function, but it could be something more serious like a check sum')
+
+class My_Meta(type):
+    def __new__(mcs, name, bases, dictionary):
+        if 'greetings' not in dictionary:
+            dictionary['greetings'] = greetings
+        obj = super().__new__(mcs, name, bases, dictionary)
+        return obj
+
+class My_Class1(metaclass=My_Meta):
+    pass
+
+class My_Class2(metaclass=My_Meta):
+    def greetings(self):
+        print('We are ready to greet you!')
+
+myobj1 = My_Class1()
+myobj1.greetings()
+myobj2 = My_Class2()
+myobj2.greetings()
+
+Just a greeting function, but it could be something more serious like a check sum
+We are ready to greet you!
+output
+
+This is how metaclasses become very useful – they can control the process of class instantiation, and adjust created classes to conform with selected rules.
+
+The concept of metaclasses looks hard at first glance, but if you’re responsible for API design or development, metaclasses are the magic that could help you in your work.
+When you want to change your classes automatically, but decorators are not efficient, then metaclasses should help you.
+In all other cases, you should agree with Tim Peters that you shouldn’t worry about metaclasses, because many problems can be solved in a simpler way than by using metaclasses.
+But still, it’s beneficial to understand metaclasses in order to know when to employ them to solve a class type problem.
