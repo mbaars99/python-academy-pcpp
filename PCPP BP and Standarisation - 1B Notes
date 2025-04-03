@@ -381,12 +381,141 @@ Traceback (most recent call last):
     integer_number = int(input("Enter an integer number: "))
 ValueError: invalid literal for int() with base 10: '15.6'
 
->>>> 2.1.1.13 PEP 20 – The Zen of Python
+2.1.1.13 PEP 20 – The Zen of Python
 
+There should be one – and preferably only one – obvious way to do it. “Although that way may not be obvious at first unless you're Dutch.”
 
+There may be multiple ways of achieving the same goal. For example, if you want to take the user’s first name and last name, and display them on the screen, you can do it in one of the following ways:
 
+first_name = input("Enter your first name: ")
+last_name = input("Enter your last name: ")
 
+print("Your name is:", first_name, last_name)
+print("Your name is:" + " " + first_name + " " + last_name)
+print("Your name is: {} {}".format(first_name, last_name))
 
+Which one of them is the preferred one? It depends on what you want to achieve, how you want to format the outputted text, what past conventions were used, etc.
+
+It seems there’s nothing wrong with having multiple ways to do a certain thing, as long as we’re ready for confrontation, and are able to agree on the best way to achieve a particular goal. 
+
+The guideline also reminds us that it’s a good idea to follow the language use standards and conventions. For example, if you’ve been using snake_case to name your variables in your code so far, it may be a bad idea to start using CamelCase for the rest of your code within one and the same program. Well, unless you do this for a specific purpose, and the advantages of such an approach are bigger than the disadvantages.
+
+Finally, the aphorism works as a gentle indication of yet another important piece of advice: where possible, it’s good to remember that each function, each class, each method – each entity – should have a single cohesive responsibility. Why? Because such an approach helps you gain more clarity and produce cleaner code, makes it easier and cheaper to maintain it, and less vulnerable to bugs.
+
+When it comes to the second part of the aphorism, on the one hand it is meant to be a joke: the Dutch surely have a different way of thinking, different worldview, and different way of getting down to doing things (you certainly remember that Guido van Rossum is Dutch, too).
+
+On the other hand, however, it indicates that working out how to obtain the best solution can be a long and challenging process: one obvious way to do something may not necessarily be obvious at first. Finding a relevant and preferred solution may require time, effort, and changing certain habits.
+
+Python itself is a good example of this – it’s still evolving, its features and the ideas around it are changing, and Python programmers may still perceive relatively similar things differently.
+
+What’s the best way to access values in a dictionary: using the get() method, or the syntax my_dict['key'], or some other way? What’s the best way to read a file: block by block, line by line? What’s the best way to print the user’s first and last names on the screen…?
+
+Now is better than never. “Although never is often better than *right* now.”
+
+You should not put off till tomorrow what you can do today. It’s a well-known proverb. Why? Well, because there’s never a good time for anything – there are always some “buts” and “ifs” which tell you to wait longer and delay things. Before you actually get down to doing these things – writing your code – you may have forgotten the ideas or information you need to do it well.
+
+Python lets you quickly translate your ideas into working code. Whenever you experience the eureka effect or have your moment of inspiration, write down your thoughts and encode them in Python (or at least use some form of pseudocode) – even if your code is far from perfect. You can later refine, develop, or redesign it very easily.
+
+Another thing to remember is that there is no such thing as a perfect thing. You can work hard to move closer to perfection, refine your code, refactor it several times, but it will never be perfect. No single thing can, and you must be aware of that. If you give in to temptation to complete a program and release it only when it’s perfect, it’s highly probable you will never do it.
+
+Your program has the expected functioning? It passes all the tests? Maybe it’s ready for the world to see it?
+
+On the other hand, the aphorism tells us not to forget about the proper balance. Just as perfect is the enemy of good, it often turns out that faster is the enemy of slower. There are cases when things should not be rushed.
+
+Your function’s not working as expected and you cannot fix it today? Mark it as deprecated so that you don’t forget about it:
+
+def deprecated_function():
+    raise DeprecationWarning
+
+Your project needs to go through the testing stage? Do you need to collect feedback from the users? The marketing campaign is not ready yet? Take the time to get everything right and release the product when it’s really ready, not when it looks ready.
+
+If the implementation is hard to explain, it's a bad idea. “If the implementation is easy to explain, it may be a good idea.”
+Everything and anything that can be explained in words can be translated into code, and eventually turned into a well-operating computer program.
+
+If you can explain what you expect from a program, what you want it to do – such a program can be designed. If you find it difficult to explain its features and functionality, it may be a signal that maybe your idea should be thought over again and digested.
+
+Simplicity and minimalism are the keys again (though such ones that don’t kill readability). Simple is better than complex, but complex is better than complicated – if you’ve already forgotten, here’s a subtle reminder. Keep things simple; the simpler, the better.
+
+However, even though something’s easy to explain, it doesn’t mean it’s good. It’s just easier to judge whether it is or not. When you’re in doubt, have your implementation reviewed by your peers and see how much effort it takes them to grasp the idea and understand the whole concept. Another pair of eyes can cast new light on your project and help you see it in a new way.
+
+Namespaces are one honking great idea – let's do more of those! Python provides a good, well-organized namespace mechanism to manage the availability of identifiers that you want to use and avoid conflicts with already existing names across different scopes.
+
+What is a namespace? Generally speaking, it’s “a mapping from names to objects” (https://docs.python.org/3/tutorial/classes.html) implemented in Python in the form of a dictionary. What does it mean? Simply speaking, it means that whenever you define a variable, Python “remembers” two things: the variable’s identifier, and the value you pass to it.
+
+How does it happen? Python implicitly adds them to an internal dictionary which resides within a particular scope, i.e., the region of a Python program where namespaces are accessible. If you want to access that variable, Python looks up its name in the dictionary and returns the value passed to it. If the variable doesn’t exist and, hence, isn’t found, then it raises the NameError exception.
+
+Functions, classes, objects, modules, packages… they’re all namespaces. This fact results in the following: a more specific namespace cannot be altered by a less specific namespace, as they reside within two different scopes (e.g., a local variable inside a function doesn’t influence a global variable*). However, a more specific namespace has access to a less specific namespace (e.g., a global variable can be accessed from within a function).
+
+*Using the global keyword before a global variable inside the function is a mechanism that allows you to alter that variable, even though it resides in a different scope (bad practice).
+
+Use the namespaces to make your code clearer and more readable. For example, do this:
+
+from instruments import guitars
+
+guitars.fender(page)
+guitars.ibanez(vai)
+
+Instead of this:
+
+from instruments.guitars import fender, ibanez
+
+fender(page)
+ibanez(vai)
+
+Why? Because the first example will clearly show that fender and ibanez come from a different module, not from within the local scope.
+
+Introduction to PEP 8. As mentioned earlier, PEP 8 is a document that provides coding conventions (code style guide) for Python code.
+
+PEP 8 is considered one of the most important PEPs and a must-read for every professional Python programmer, as it helps to make the code more consistent, more readable, and more efficient.
+
+Even though some programming projects may adopt their own style guidelines (in which case such project-specific guidelines may be favored over the conventions provided for by PEP 8, especially in the case of any conflicts, or backwards-compatibility issues), the PEP 8 best practices are still highly recommended reading, as they help you to better understand the philosophy behind Python and become a more aware and proficient programmer.
+
+PEP 8 is still evolving as new, additional conventions are being identified and included in it, and at the same time some old conventions are being identified as obsolete and discouraged from being followed.
+
+The Hobgoblin of Little Minds
+”A foolish consistency is the hobgoblin of little minds.” This is a quote from Ralph Waldo Emerson’s essay “Self-Reliance” where Emerson urges readers to be consistent in their beliefs and practices. In our case, it means we must not forget about one simple but important observation: our code will be read much more often than it will be written.
+
+On the one hand, consistency is a crucial factor that determines code readability. On the other hand, inconsistency with PEP 8 may at times be a better option. If the style guides are not applicable to your project, it may be better to ignore them and decide for yourself what is best. As PEP 8 says:
+
+A style guide is about consistency. Consistency with this style guide is important. Consistency within a project is more important. Consistency within one module or function is the most important. [...] However, know when to be inconsistent [...]. When in doubt, use your best judgement.
+
+When should you ignore some specific PEP 8 guidelines (or at least consider doing so)?
+
+If following them will mean that you break backwards compatibility.
+If following them will have a negative effect on code readability.
+If following them will cause inconsistency with the rest of the code. (However, this may be a good opportunity to rewrite the code and make it PEP 8 compliant.)
+If there is no good reason for making the code PEP 8 compliant, or the code predates PEP 8.
+PEP 8 is intended to improve code readability and “make it consistent across the wide spectrum of Python code.” Keeping your Python code compliant with PEP 8 is, therefore, a good idea, but you should never blindly adhere to these recommendations. You should always use your best judgement.
+
+PEP 8 compliant checkers. There are many useful tools that can help you validate your code style and check it against PEP 8 style conventions. These tools can be installed and run locally, or accessed online. We want to show you just two of them, but we encourage you to explore further on your own:
+
+pycodestyle (formerly called pep8, but the name was changed to avoid confusion) - Python style guide checker; it lets you check your Python code for conformance with the style conventions in PEP 8. You can install the tool with the following command in the terminal:
+
+$ pip install pycodestyle
+
+You can run it on a file or files to obtain information about non-conformance (and indicate errors in the source code and their frequency).
+
+More information: https://github.com/PyCQA/pycodestyle
+Documentation: https://pycodestyle.pycqa.org/en/latest/
+
+You can also install autopep8 to automatically format your Python code to conform to the PEP 8 guidelines. To be able to use it, you need the pycodestyle installation on your machine in order to indicate those parts of the code which require formatting fixes.
+
+More information: https://pypi.org/project/autopep8/
+
+PEP 8 online is an online PEP 8 checker created by Valentin Bryukhanov which lets you paste your code or upload a file, and validate it against the PEP 8 style guidelines. The online tool is built using Flask, Twitter Bootstrap, and the PEP8 module (the very same module we’ve just described).
+
+More information: http://pep8online.com/about >>> seems down. google found: https://www.codewof.co.nz/style/python3/
+
+Recommendations for Code Layout
+PEP 8 is supposed to make your coding experience better and your life a whole lot easier. As stated before, the way you write your code has a big impact on its readability. However, you should not forget it can determine its syntactic legality, too.
+
+In this section, we’ll focus on style recommendations related to such things as:
+
+indentation, using tabs and spaces;
+line length, line breaks, and blank lines;
+source file encoding and module imports.
+Indentation
+The indentation level, understood as the leading whitespace (i.e., spaces and tabs) at the beginning of each logical line, is used to group statements.
 
 
 
