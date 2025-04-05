@@ -482,22 +482,17 @@ PEP 8 online is an online PEP 8 checker created by Valentin Bryukhanov which let
 
 More information: http://pep8online.com/about >>> seems down. google found: https://www.codewof.co.nz/style/python3/
 
-Recommendations for Code Layout
-PEP 8 is supposed to make your coding experience better and your life a whole lot easier. As stated before, the way you write your code has a big impact on its readability. However, you should not forget it can determine its syntactic legality, too.
+Recommendations for Code Layout. PEP 8 is supposed to make your coding experience better and your life a whole lot easier. As stated before, the way you write your code has a big impact on its readability. However, you should not forget it can determine its syntactic legality, too.
 
 In this section, we’ll focus on style recommendations related to such things as:
-
 indentation, using tabs and spaces;
 line length, line breaks, and blank lines;
 source file encoding and module imports.
-Indentation
-The indentation level, understood as the leading whitespace (i.e., spaces and tabs) at the beginning of each logical line, is used to group statements.
 
-When writing code in Python, you should remember to follow these two simple rules:
+Indentation. The indentation level, understood as the leading whitespace (i.e., spaces and tabs) at the beginning of each logical line, is used to group statements. When writing code in Python, you should remember to follow these two simple rules:
 
 Use four spaces per indentation level, and;
-Use spaces rather than tabs.
-However, you can use tabs when you wish to keep consistency with code that has already been indented with tabs (if it’s not possible or efficient to make it PEP 8 compliant).
+Use spaces rather than tabs. However, you can use tabs when you wish to keep consistency with code that has already been indented with tabs (if it’s not possible or efficient to make it PEP 8 compliant).
 
 Note: Mixing tabs and spaces for indentation is not allowed in Python 3. This will raise a TabError exception: “TabError: inconsistent use of tabs and spaces in indentation”.
 
@@ -544,20 +539,15 @@ def my_fun(
         d, e, f):
     return (a + b + c) * (d + e + f)
 
-
 You can read more about indentation in the context of continuation lines at https://www.python.org/dev/peps/pep-0008/#indentation.
 
-Maximum Line Length and Line Breaks
-If possible, you should limit all lines to a maximum of 79 characters as this will help you avoid wrapping several lines of code. If line wrapping is inevitable, use Python’s implied line continuation from the previous page.
+Maximum Line Length and Line Breaks. If possible, you should limit all lines to a maximum of 79 characters as this will help you avoid wrapping several lines of code. If line wrapping is inevitable, use Python’s implied line continuation from the previous page. In the case of docstrings and comments, the line length should not exceed 72 characters. 
 
-In the case of docstrings and comments, the line length should not exceed 72 characters. Max line length and line breaks
-
-For convenience, if agreed by a team (or teams) working on a given project, according to PEP 8, it’s possible to increase the line length to 99 characters (this does not relate to docstrings/comments, whose line length should still remain limited to 72 characters).
+Max line length and line breaks. For convenience, if agreed by a team (or teams) working on a given project, according to PEP 8, it’s possible to increase the line length to 99 characters (this does not relate to docstrings/comments, whose line length should still remain limited to 72 characters).
 
 Still, the Python Standard Library is conservative in this matter, and requires you to use no more than 79 characters per line (72 for comments/docstrings).
 
-Line breaks and operators
-Even though in Python you’re allowed to break code lines before or after binary operators (providing you do so consistently and that this convention has been used in your code before), it is recommended that you follow Donald Knuth’s style suggestions and break before binary operators as this results in a more readable, eye-friendly code.
+Line breaks and operators. Even though in Python you’re allowed to break code lines before or after binary operators (providing you do so consistently and that this convention has been used in your code before), it is recommended that you follow Donald Knuth’s style suggestions and break before binary operators as this results in a more readable, eye-friendly code.
 
 Example:
 # Recommended
@@ -585,6 +575,7 @@ Class ClassTwo:
 
 def my_top_level_function():
     return None
+
 – a single blank line to surround method definitions inside a class:
 
 class MyClass:
@@ -593,7 +584,6 @@ class MyClass:
 
     def method_two(self):
         return None
-
 
 – blank lines in functions in order to indicate logical sections (sparingly). For example:
 
@@ -640,9 +630,7 @@ from subprocess import Popen, PIPE. If possible, use absolute imports (i.e., imp
 
 import animals.mammals.dogs.puppies
 
-Such imports are preferred in Python, especially when your application is not overgrown or extremely complex.
-
-You shouldn’t (and actually you cannot) use implicit relative imports, as these are no longer present in Python 3. You should also avoid using wildcard imports, for example:
+Such imports are preferred in Python, especially when your application is not overgrown or extremely complex. You shouldn’t (and actually you cannot) use implicit relative imports, as these are no longer present in Python 3. You should also avoid using wildcard imports, for example:
 
 from animals import *
 
@@ -652,8 +640,7 @@ Recommendations for string quotes, whitespace, and trailing commas. In this sect
 
 string quotes;
 whitespace in expressions and statements, and the use of trailing commas.
-String quotes
-Python allows us to use single-quoted (e.g., 'a string') and double-quoted (e.g., "a string") strings. They’re the same, and there’s no special recommendation in PEP telling you which style you should adopt in your code writing. Again, the most important rule is: be consistent with your choice.
+String quotes. Python allows us to use single-quoted (e.g., 'a string') and double-quoted (e.g., "a string") strings. They’re the same, and there’s no special recommendation in PEP telling you which style you should adopt in your code writing. Again, the most important rule is: be consistent with your choice.
 
 However, to improve readability, PEP 8 recommends that you should try to avoid using backslashes (escape characters) in strings. This means that:
 
@@ -661,8 +648,7 @@ if your string contains single-quote characters, it’s recommended that you use
 if your string contains double-quote characters, it’s recommended that you use single-quoted strings.
 In the case of triple-quoted strings, PEP 8 recommends that you always use double-quote characters to maintain consistency with the docstring convention detailed in PEP 257 (we’re going to tell you more about this soon).
 
-Whitespace in expressions and statements
-PEP 8 contains a long section that shows examples of correct and incorrect uses of whitespace in code. Generally, you should avoid using too much whitespace, as it makes your code difficult to follow.
+Whitespace in expressions and statements. PEP 8 contains a long section that shows examples of correct and incorrect uses of whitespace in code. Generally, you should avoid using too much whitespace, as it makes your code difficult to follow.
 
 So, for example, do not use excessive whitespace immediately inside parentheses/brackets/braces, or immediately before a comma/semicolon/colon:
 
@@ -681,16 +667,15 @@ Examples:
 # Bad:
 bread[0 : 3], roll[1: 3 :5], bun[3: 5:], donut[ 1: :5 ]
 
-
 # Good:
 bread[0:3], roll[1:3:5], bun[3:5:], donut[1::5]
 
-Trailing commas
-Again, do not use excessive whitespace:
+Trailing commas. Again, do not use excessive whitespace:
 
 after a trailing comma followed by a closing parenthesis, or
 immediately before an opening parenthesis that marks the beginning of the argument list of a function invocation, or
 immediately before an opening parenthesis that marks the beginning of indexing/slicing.
+
 Examples:
 
 # Bad:
@@ -702,7 +687,6 @@ my_dictionary ['key'] = my_list [index]
 my_tuple = (0, 1, 2,)
 my_function(5)
 my_dictionary['key'] = my_list[index]
-
 
 Whitespace in expressions and statements (cont.). Don’t use more than one space before and after operators, e.g.:
 
@@ -747,6 +731,7 @@ There are a few rules you should follow when leaving comments in code:
 Write comments that will not contradict the code or mislead the reader. They’re much worse than no comment at all.
 Update your comments when your program gets updated.
 Write comments as complete sentences (capitalize the first word if it’s not an identifier, and end your sentence with a full stop). For example:
+
 # Program that calculates body mass index (BMI).
 
 height = float(input("Your height (in meters): "))
@@ -785,8 +770,7 @@ x = product * 1.73
 y = x ** 2
 x_to_y = (x*y) / 1.05
 
-Inline comments
-Inline comments are comments that are written on the same line as your statements. They should address or provide further explanation to a single line of code or a single statement. You should not overuse them.
+Inline comments. Inline comments are comments that are written on the same line as your statements. They should address or provide further explanation to a single line of code or a single statement. You should not overuse them.
 
 Generally, inline comments should be: 
 
@@ -809,10 +793,7 @@ a = 'Adam'  # User's first name.
 # Good:
 user_first_name = 'Adam'
 
-Documentation strings
-Documentation strings, or docstrings as they’re often called, let you provide descriptions and explanations for all public modules, files, functions, classes, and methods you use in your code. You should use them in this context.
-
-We’re going to deal with docstrings when we talk about PEP 257 later in the course. For the time being, you just need to remember that they’re a type of comment that begins and ends with three double quotes: """.
+Documentation strings. Documentation strings, or docstrings as they’re often called, let you provide descriptions and explanations for all public modules, files, functions, classes, and methods you use in your code. You should use them in this context. We’re going to deal with docstrings when we talk about PEP 257 later in the course. For the time being, you just need to remember that they’re a type of comment that begins and ends with three double quotes: """.
 
 Examples:
 
@@ -829,8 +810,7 @@ def fun(x):
     ...
 
 Naming conventions – Introduction. When programming, you often have to name identifiers and other entities in your code. Giving suitable names and avoiding inappropriate ones will definitely increase your code readability and save you (and other programmers reading your code) a lot of time and effort.
-You most certainly already follow some conventions for giving names to variables, functions, and classes in your code; some of them may come from your former programming experience in other languages, others may be a purely practical choice, while still others may be determined by the project requirements or practices adopted by your company or team.
-Python naming conventions are, unfortunately, not fully consistent throughout the Python library. However, it is recommended that new modules and packages be written in compliance with the PEP 8 naming recommendations (unless an existing library follows a different style, in which case internal consistency is the preferred solution).
+You most certainly already follow some conventions for giving names to variables, functions, and classes in your code; some of them may come from your former programming experience in other languages, others may be a purely practical choice, while still others may be determined by the project requirements or practices adopted by your company or team. Python naming conventions are, unfortunately, not fully consistent throughout the Python library. However, it is recommended that new modules and packages be written in compliance with the PEP 8 naming recommendations (unless an existing library follows a different style, in which case internal consistency is the preferred solution).
 
 Naming styles. There are many different naming styles used in programming, for example:
 
@@ -856,9 +836,7 @@ __my_sample_name – a name that starts with a double leading underscore is used
 
 __my_sample_name__ – a name that starts and ends with a double underscore is used for "magic" objects and attributes that reside in user-controlled namespaces, e.g., __init__, __import__, or __file__. You shouldn't create such names, but only use them as documented.
 
-Naming conventions – recommendations. PEP 8 provides for a specific naming convention with regard to a specific identifier.
-
-When giving a name to a variable, you should use a lowercase letter or word(s), and separate words by underscores, e.g., x, var, my_variable. The same convention applies to global variables.
+Naming conventions – recommendations. PEP 8 provides for a specific naming convention with regard to a specific identifier. When giving a name to a variable, you should use a lowercase letter or word(s), and separate words by underscores, e.g., x, var, my_variable. The same convention applies to global variables.
 
 Functions follow the same rules as variables, i.e., when giving a name to a function, you should use a lowercase letter or word(s) separated by underscores, e.g., fun, my_function.
 
@@ -888,6 +866,8 @@ Here they are:
 # Bad:
 if x == None:
     print("A")
+
+<hier>
 
 What's the difference?
 is checks for identity — are both sides pointing to the exact same object in memory?
