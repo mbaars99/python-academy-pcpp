@@ -30,6 +30,7 @@ PEP 1 – PEP Purpose and Guidelines, which provides information about the purpo
 PEP 8 – Style Guide for Python Code, which gives conventions and presents best practices for Python coding;
 PEP 20 – The Zen of Python, which presents a list of principles for Python’s design;
 PEP 257 – Docstring Conventions, which provides guidelines for conventions and semantics associated with Python docstrings.
+
 We encourage you to dive into PEPs on your own. We’re sure you‘ll become more and more curious about them as your programming experience and awareness grow.
 
 PEP 1 – PEP Purpose and Guidelines. PEP is an acronym that stands for Python Enhancement Proposals, which, in fact, is a collection of guidelines, best practices, descriptions of (new) features and implementations, as well as processes, mechanisms and important information surrounding Python.
@@ -101,9 +102,7 @@ hypotenuse = sqrt(a**2 + b**2)
 
 print("The length of the hypotenuse is", hypotenuse)
 
-Explicit is better than implicit. The code you write should be explicit and readable.
-Whenever you want to use an implicit feature of the language, ask yourself whether you really need it. Maybe there’s a better way to implement the functionality. If not, think about leaving a comment in code to explain what’s going on so that other programmers find it easier to understand your code.
-In Python, it’s preferred to use not only the simplest way to express a programming idea, but also the most explicit, concrete, specific one.
+Explicit is better than implicit. The code you write should be explicit and readable. Whenever you want to use an implicit feature of the language, ask yourself whether you really need it. Maybe there’s a better way to implement the functionality. If not, think about leaving a comment in code to explain what’s going on so that other programmers find it easier to understand your code. In Python, it’s preferred to use not only the simplest way to express a programming idea, but also the most explicit, concrete, specific one.
 
 Explicit is better than implicit. Therefore, it’s sometimes a good idea to add more verbosity to your code as it all counts towards readability. Giving self-explanatory variable and function names, or adding more explicitness to imports or function arguments may be good practice.
 
@@ -119,8 +118,7 @@ from fruit import apples, bananas
 
 apples(quantity=2, price=3.45)
 
-Simple is better than complex. Simplicity is the key to success.
-A simpler solution is usually preferred over a complex one, and generally, the minimalistic approach wins. Remember: use appropriate tools adjusted to the specificity of your project. Using a plane to transport yourself to a nearby shop could be okay (assuming you’re slightly eccentric), but usually it’d be enough to walk or drive. Similarly, you wouldn’t normally walk the distance if you wanted to travel from the UK to the USA. Taking a plane would be a more sensible idea here. Consider not adopting an object-oriented approach when it’s not needed. Use fewer lines of code if that’s possible.
+Simple is better than complex. Simplicity is the key to success. A simpler solution is usually preferred over a complex one, and generally, the minimalistic approach wins. Remember: use appropriate tools adjusted to the specificity of your project. Using a plane to transport yourself to a nearby shop could be okay (assuming you’re slightly eccentric), but usually it’d be enough to walk or drive. Similarly, you wouldn’t normally walk the distance if you wanted to travel from the UK to the USA. Taking a plane would be a more sensible idea here. Consider not adopting an object-oriented approach when it’s not needed. Use fewer lines of code if that’s possible.
 
 If you need to implement a more complex solution, divide problems into smaller, simpler parts.
 
@@ -144,8 +142,7 @@ numbers.sort()
 print(numbers)
 
 Complex is better than complicated. When simple solutions are not possible, be aware of the limitations carried by simplicity, and use complex solutions instead.
-Distinguishing between complex as consisting of many elements and complicated, meaning difficult to understand, is yet another thing to consider when writing code.
-In other words, there are times when a complex solution may be preferred over a simple one, especially in the case of the latter causing misunderstanding, doubt, or misinterpretation. You should avoid those. On the other hand, complex is always preferred to complicated. When your code gets big and too difficult to understand and grasp, divide it into well-separated parts, so that it’s easier to manage and handle.
+Distinguishing between complex as consisting of many elements and complicated, meaning difficult to understand, is yet another thing to consider when writing code. In other words, there are times when a complex solution may be preferred over a simple one, especially in the case of the latter causing misunderstanding, doubt, or misinterpretation. You should avoid those. On the other hand, complex is always preferred to complicated. When your code gets big and too difficult to understand and grasp, divide it into well-separated parts, so that it’s easier to manage and handle.
 
 Avoid misunderstanding, lack of clarity, and miscomprehension.
 
@@ -184,30 +181,7 @@ for i in range(5):
 
 Flat is better than nested. Nesting code makes it more difficult to follow and understand. Nesting two or three levels deep may still be good, but anything beyond that becomes confusing and unreadable. Even though you can actually have any level of nested loops or if statements in Python, anything above three should be a clear signal that it’s maybe a good time to start refactoring your code. Flat code is more user-friendly, and becomes much easier to maintain. Remember this.
 
-Example: Display a message whether or not x is within the range from 4 to 6.
-
-#bad
-x = float(input("Enter a number: "))
-
-if x > 0:
-    if x > 1:
-        if x > 2:
-            if x > 3:
-                if x >= 4:
-                    if x <= 6:
-                        print("x is a number between 4 and 6.")
-else:
-    print("x is not a number between 4 and 6.")
-
-#better
-x = float(input("Enter a number: "))
-
-if x >= 4 and x <=6:
-    print("x is a number between 4 and 6.")
-else:
-    print("x is not a number between 4 and 6.")
-
-Flat is better than nested. Nesting code makes it more difficult to follow and understand. Nesting two or three levels deep may still be good, but anything beyond that becomes confusing and unreadable. Even though you can actually have any level of nested loops or if statements in Python, anything above three should be a clear signal that it’s maybe a good time to start refactoring your code. Flat code is more user-friendly, and becomes much easier to maintain. Remember this.
+# "Start refactoring your code" means it's time to go through your existing code and improve its structure, readability, and organization — without changing what the code actually does.
 
 Example: Display a message whether or not x is within the range from 4 to 6.
 
@@ -275,7 +249,7 @@ def multiply_two_numbers(first_number, second_number):
 
 print(multiply_two_numbers(7, 9))
 
-def addingTwoNumbers(firstNumber, secondNumber):
+def addingTwoNumbers(firstNumber, secondNumber):  # note function naming
     return firstNumber + secondNumber
 
 print(addingTwoNumbers(7, 9))
@@ -311,6 +285,8 @@ number = int(input("Enter a number: "))
 multiply_number_by_two = number * 2
 
 print("Your number multiplied by two is:", multiply_number_by_two)
+
+<hier>
 
 What happens when the user enters 3.5 or two as the input? Well, Python will of course loudly inform you that there’s been something wrong: it will raise the ValueError exception. The Python language provides a very good mechanism for error handling, with a number of built-in exceptions, and a great toolset for creating user-defined exception handling systems. The Zen of Python gently reminds us that if a block of code is unable to perform its function and work in the way that is expected by the programmer, it should terminate the program and/or loudly announce that something has gone wrong (i.e., raise an exception) rather than continue running without interruption.
 
