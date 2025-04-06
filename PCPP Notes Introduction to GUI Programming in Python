@@ -59,5 +59,174 @@ This means something very important to us. You may not want to believe us at the
 
 Let's try to imagine it.
 
+Look at the pseudo-code below:
+
+while True:
+    wait_for_user_action()
+    if user_pressed_button_yes():
+    :
+    elif user_pressed_button_no():
+    :
+    elif user_move_mouse_coursor_over_button_yes():
+    :
+    elif user_move_mouse_coursor_over_button_no():
+    :
+    elif user_pressed_Tab_key():
+        if isfocused(button_yes):
+        :
+        elif isfocused(button_no):
+       :
+    :
+    :
+
+Note: The pseudo-code is deprived of all details. Moreover, it's not complete. It covers less than about 10 % of all possible events, and should be heavily developed to behave in a reasonable way.
+Believe us: you don't want to write a code like this one. Fortunately, you don't need to. Visual programming demands a completely different philosophy, or (expressing this thought in a more fashionable way) it needs a different paradigm. This paradigm exists, and is widely applied to create GUI applications.
+
+It's called event-driven programming.
+
+Classical vs. event-driven paradigm. What is EDP like? Or rather, what is EDP unlike? First of all, detecting, registering and classifying all of a user's actions is beyond the programmer's control – there is a dedicated component called the event controller which takes care of this. It's automatic and completely opaque. You don't need to do anything (or almost anything) to make the machinery run, but you are obliged to do something else.
+
+You have to inform the event controller what you want to perform when a particular event (e.g., a mouse click). This is done by writing specialized functions called event handlers. You write these handlers only for the events you want to serve – all other events will activate default behaviors (e.g., focus moving and window closing). Of course, just implementing an event handler is not enough – you also have to make the event controller aware of it. Let's imagine that we have a function named DoSomething() which... does something. We want the function to be invoked when a user clicks a button called DO IT!.
+
+In the classical paradigm we would have to:
+
+discover the click and check if it happened over our button;
+redraw the button to reflect the click (e.g., to show that it is actually pressed)
+invoke the function.
+In the event-driven paradigm our duties look completely different:
+
+the event controller detects the clicks on its own;
+it identifies the target of the click on its own;
+it invokes the desired function on its own;
+all these actions take place behind the scenes! Really!
+Sounds good? Oh, yes, it does!
+
+Events. Have you noticed? We silently introduced a new word into our discussion. It’s the event. What it is? Or rather, what could it be? There are lots of events which an event manager is committed to recognizing, discovering, and serving. Here are some of them:
+
+pressing the mouse button;
+releasing the mouse button (actually, an ordinary mouse click consists of these two subsequent events)
+moving the mouse cursor;
+dragging something under the mouse cursor;
+pressing and releasing a key;
+tapping a screen;
+tracking the passage of time;
+monitoring a widget’s state change;
+and many, many more...
+
+-----------------------------------------------------
+|                     Event                         |
+-----------------------------------------------------
+                          |
+                          v
+-----------------------------------------------------
+|                    Trigger                        |
+-----------------------------------------------------
+                          |
+                          v
+-----------------------------------------------------
+|                 Event Handler                     |
+-----------------------------------------------------
+                          |
+                          v
+-----------------------------------------------------
+|                   Event Loop                      |
+-----------------------------------------------------
+                          |
+                          v
+(loops back to Event)
+
+TkInter. Unfortunately, each operating system delivers its own set of services designed to operate with its native GUI. Moreover, some of them (e.g., Linux) may define more than one standard for visual programming (two of the most widespread in the U*x world are named GTK and Qt). This means that if we want to build portable GUI applications (i.e., apps able to work under different operating environments that always look the same) we need something more – we need an adapter. A set of uniform facilities enables us, the programmers, to write one code and not worry about portability. Such an adapter is called a widget toolkit, a GUI toolkit, or a UX library. One of these toolkits, which is very attractive to us, is Tk.
+
+Here are some of its features:
+it’s free and open (we don’t need to pay for anything)
+it has been developed since 1991 (which means it’s stable and mature)
+it defines and serves more than thirty different universal widgets (which is enough even for quite complex applications)
+its implementation is available for many programming languages (of course, for Python too)
+
+The module that brings Tk to the Python world is named TkInter, which is short for Tk Interface. It’s free and open, too. You may have some trouble believing that you’ve been using TkInter for a long time, actually since your very first encounter with programming in Python. Yes, it’s true – IDLE, the very first Python IDE, is written using TkInter. We think this is the best recommendation – don’t you?
+
+Importing TkInter. As you already know, from Python's point of view TkInter is a package named tkinter. The package contains a bunch of functions, constants, classes, objects, and modules used to build GUI applications. The GUI application itself consists of four essential elements:
+
+importing the needed tkinter components;
+creating an application’s main window;
+adding a set of necessary widgets to the window;
+launching the event controller.
+
+That’s all. Really. Looks too good to be true? Let us show how it works. We’ll do it step-by-step. Ready? The simplest (and at the same time the less controllable) way of importing tkinter facilities is to import the package as a whole:
+
+import tkinter
+
+Note: it won’t allow you to access some modules built-in within the package and you will still have to import them separately. As you already now, such an import will force you to use the qualified names of tkinter’s components. If you don’t like to write long package names each time you make use of their contents, you can perform an import which renames the package (precisely: which creates an alias of its original name) at the time of import. tk looks shorter than tkinter, doesn’t it?
+
+import tkinter as tk
+
+Okay, we know there’s no accounting for taste, but it’s definitely worth accounting for code readability. The choice is entirely up to you. If you like to have full control over all your source code, you can make the import process extremely itemized by importing each of the facilities separately – just like this:
+
+from tkinter import Button
+
+If you're an enthusiast of living life on the edge, you can simplify your import (but not the rest of your work) by using the star as a component name:
+
+from tkinter import *
+
+It's handy when you write it, but it can bring some cumbersome troubles when names from the package's namespace cross with some of your private names. Don't think we're going to discourage you from using this form. It's only a warning. Or rather a piece of friendly advice. Now we're ready to create our first application. The application will be completely mute, deaf to the same extent as it is mute, and thus completely indifferent to any input. Don't worry, we'll breathe some life into it soon – it's only a very first step.
+
+Look at the code in the editor. The main application window (which is often the only window being used by the application) is created by the tkinter method named Tk(). In its most commonly used form, it needs no arguments. The object returned by the method is complete, but at the same time, completely invisible. Moreover, it won't be visible until the event controller starts. To start the controller, you have to invoke the main window's method, named mainloop(). The name is significant because – as you can see – there is nothing more you can do in your code. Entering the controller's main loop deprives you of the possibility of direct control over the code's execution. Now you're fully at the mercy of the controller. Exiting the main loop is equivalent to finishing the application, as without the controller's companion there is nothing more you can do.
+
+Let's run the code now.
+
+import tkinter
+
+skylight = tkinter.Tk()
+skylight.mainloop()
+
+Did you get the same window as ours? There are some issues with the window, and the most important is how to close it while also causing the application to quit. Currently, there is no other way than to make use of some of the OS's default behaviors, e.g., clicking the closing button (ours is red – and yours?) or using a dedicated keyboard shortcut like MS Windows®' Alt-F4. A preferable way of coping with that is to equip the window with a dedicated button, but now we're going to make a little cosmetic change. We don't like the window's title. We'll change it now. How? Each window (including the main one) has a method named – of course – title(). The method can be invoked more than once in any moment of the window's life. We'll activate it before the window is shown, just like the way we do it in the editor window.
+
+Can you see it? The title has changed now!
+
+Now it's the turn of the button. A button visible on the screen is, in fact, a reflection of an object of the Button class. To bring a button to life, you have to:
+
+create a Button class object (it'll be done by the class's constructor)
+place the button inside the main window (it'll be done by one of the window's methods)
+Note the distinction: it can be said that the button creates itself, but to make it visible, you need the window's (not the button's!) method.
+
+Take a look at the code in the editor window.
+import tkinter
+
+skylight = tkinter.Tk()
+skylight.title("Skylight")
+button = tkinter.Button(skylight, text="Bye!")
+button.place(x=10, y=10)
+skylight.mainloop()
+
+To create a Button class object, we make use of its constructor. Its first argument (which is a reference to the target window) is obligatory. All others are optional. The one named text sets the initial button's title (note: the title can be changed at any time). The object saved inside the button variable is now created, but still invisible. Moreover, the main window doesn't know where to put it within its interior. Let's fix that. The act of placing the widget somewhere inside the window is done with a method named place(). As you can see, we use the method in a way in which the button's two coordinates are given: x and y. There are three important remarks that must be written here:
+
+the widget's coordinates refer defaultly to the pixel occupied by the upper-left corner;
+the widget's size is defaultly determined by the constructor in order to fit the widget's content (the title's length and height in this case)
+the widget's location is measured in pixels, but there is one important issue which distinguishes the screen coordinates from the ones used by the geometry; look: this is what the Cartesian two-dimensional coordinates system looks like:
+
+Axis 1.png
+
+while the screen coordinates look as follows:
+
+Axis 2.png
+
+This means that a pixel described as (x=10,y=10) is located near the top-left window corner. Be aware of this! Now we're fully prepared to run the code.
+
+Hi, Button! Nice to see you!
+
+02.10.png
+
+Can we click you? Of course we can. Does it change anything? No, it doesn't. Of course, the view of the button changes, simulating a real button's behaviors, but no other reactions can be seen. We don't like this. And this is the moment when we should hire a new member onto our team – an event handler.
+
+import tkinter
+
+skylight = tkinter.Tk()
+skylight.minsize(400, 200) # use this other you get a small window with the title wrapped
+#skylight.geometry("400x200")
+skylight.title("Skylight")
+button = tkinter.Button(skylight, text="Bye!")
+button.place(x=10, y=10)
+skylight.mainloop()
+
 
 
