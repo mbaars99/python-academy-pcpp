@@ -867,8 +867,6 @@ Here they are:
 if x == None:
     print("A")
 
-<hier>
-
 What's the difference?
 is checks for identity — are both sides pointing to the exact same object in memory?
 == checks for equality — do the values happen to be equal?
@@ -906,7 +904,6 @@ else:
 – for readability purposes, use the is not operator instead of not … is:
 
 # Bad:
-
 if not x is None:
     print("It exists")
 
@@ -938,9 +935,7 @@ Now, let’s put some of the things we’ve learned into practice.
 
 What is PEP 257? PEP 257 is a document created as part of the Python Developer's Guide, which makes an attempt to standardize the high-level structure of docstrings. It outlines the conventions, best practices, and semantics (not laws or regulations!) associated with documenting Python code using docstrings. In short, it tries to answer the following two questions:
 
-What should Python docstrings contain?
-How should Python docstrings be used?
-What are docstrings? A docstring is "a string literal that occurs as the first statement in a module, function, class, or method definition. Such a docstring becomes the __doc__ special attribute of that object." (PEP 257)
+What should Python docstrings contain? How should Python docstrings be used? What are docstrings? A docstring is "a string literal that occurs as the first statement in a module, function, class, or method definition. Such a docstring becomes the __doc__ special attribute of that object." (PEP 257)
 
 In other words, docstrings are Python documentation strings that are used in the class, module, function, and method definition in order to provide information about the functionality of a larger piece of code in a prescriptive way.
 
@@ -972,8 +967,7 @@ Of course, as you'll see in the next pages, there's much more that we want to te
 
 Why comment? Why document? Before we delve into the topic of docstrings, let's try to answer the question: why is commenting and documenting code important?
 
-Essentially, we must not forget this simple rule by Guido van Rossum: "Code is more often read than written", which basically means that the code we write today will most likely be read in the future – either by you, or by another programmer, or even teams of programmers. 
-It is therefore crucial that we develop such programming and code writing habits that will allow the developers and other users to understand the code's whys and hows, as this will make the reusing of and contributing to code much easier. So, we should agree that documenting code helps to maintain a cleaner, more readable, and more sustainable code, which means it's one of the best practices a good, responsible developer should adopt as part of their daily programming workshop toolset.
+Essentially, we must not forget this simple rule by Guido van Rossum: "Code is more often read than written", which basically means that the code we write today will most likely be read in the future – either by you, or by another programmer, or even teams of programmers. It is therefore crucial that we develop such programming and code writing habits that will allow the developers and other users to understand the code's whys and hows, as this will make the reusing of and contributing to code much easier. So, we should agree that documenting code helps to maintain a cleaner, more readable, and more sustainable code, which means it's one of the best practices a good, responsible developer should adopt as part of their daily programming workshop toolset.
 
 A quick recap of comments. We hope that you remember that comments in Python are created using the hash sign (#). They should be rather brief (no more than 72 characters per line), begin with a capital letter, and end with a full stop. If you need to include a longer comment in your code, you can use a multiple-line comment, in which case you should use the hash sign at the beginning of each line of comment.
 
@@ -1014,15 +1008,11 @@ def hello(name: str) -> str:
 
 Type hinting is optional, which means PEP 484 does not obligate you to leave any static typing-related information in your code. The first example is free from any type hints. In the second example, the str annotation, which indicates that the name argument passed to the hello() function should be of type str helps us minimize the risk of certain (un)expected situations – it reduces the risk of passing a wrong type of value to the function. The -> str annotation indicates, too, that the hello() function will return a value of type str, which of course is a string.
 
-What does it all mean for you, and how can you take advantage of type hinting in Python?
-
-First of all, type hinting can help you document your code. Instead of leaving argument- and response-related information in docstrings, you can use the language itself to serve this purpose. This may be an elegant and useful way to highlight some of the more important code information, especially when publishing code in a project, sharing it with other developers, or leaving hints for yourself when you have to come back to the source code in the future. In some of the bigger software development projects, type hinting is a recommended practice that helps teams better understand the ways that types run through the code.
+What does it all mean for you, and how can you take advantage of type hinting in Python? First of all, type hinting can help you document your code. Instead of leaving argument- and response-related information in docstrings, you can use the language itself to serve this purpose. This may be an elegant and useful way to highlight some of the more important code information, especially when publishing code in a project, sharing it with other developers, or leaving hints for yourself when you have to come back to the source code in the future. In some of the bigger software development projects, type hinting is a recommended practice that helps teams better understand the ways that types run through the code.
 
 Type hinting allows you to notice certain kinds of errors more effectively and write a more beautiful and, most of all, cleaner code. When using type hints, you more carefully think about types in your code, which helps to prevent or detect some of the errors that may result from the dynamic nature of Python. (However, we're not advocates for making Python require static typing.)
 
-You must remember that type hinting in Python is not used at runtime, which means all the type information you leave in the code in the form of annotations is erased when the program is executed. In other words, type hinting does not have any effect on the operation of your code. On the other hand, when used along with some type checking system or lint-like tools that you can plug in to your editor or IDE, it can support your code-writing by autocompleting your typing and spotting and highlighting errors before your code is executed.
-
-Since type hints have no effect on the source code, this means that they have no impact on performance times (characters are ignored by Python at runtime, which has no influence on interpretation/compilation speedups).
+You must remember that type hinting in Python is not used at runtime, which means all the type information you leave in the code in the form of annotations is erased when the program is executed. In other words, type hinting does not have any effect on the operation of your code. On the other hand, when used along with some type checking system or lint-like tools that you can plug in to your editor or IDE, it can support your code-writing by autocompleting your typing and spotting and highlighting errors before your code is executed. Since type hints have no effect on the source code, this means that they have no impact on performance times (characters are ignored by Python at runtime, which has no influence on interpretation/compilation speedups).
 
 In this short section we've only touched on the most fundamental questions related to the subject of type hinting in Python. For more information about the topic, we encourage you to have a closer look at PEP 483 – The theory of type hints, PEP 484 – Type hints (information about the syntax for type annotations, static analysis and refactoring, type checking), and PEP 3107 – Function Annotations (information about the syntax for adding metadata annotations to Python functions).
 
@@ -1056,8 +1046,7 @@ multi-line docstrings – they are used for more difficult cases, and should con
 
 Let's talk a bit more about each of them.
 
-One-line docstrings
-One-line docstrings should be used for rather simple, obvious, and short descriptions. They should take up one line only, and be surrounded by triple double quotes (the closing quotes should be on the same line as the opening quotes as this helps to keep the code clean and elegant).
+One-line docstrings. One-line docstrings should be used for rather simple, obvious, and short descriptions. They should take up one line only, and be surrounded by triple double quotes (the closing quotes should be on the same line as the opening quotes as this helps to keep the code clean and elegant).
 
 Important notes:
 
@@ -1097,9 +1086,7 @@ def calculate_tax(x, y):
 
 Multi-line docstrings. Multi-line docstrings should be used for non-obvious cases and more detailed descriptions of code segments. They should have a summary line, similar to what a one-line docstring looks like, followed by a blank line and a more elaborate description. The summary line may be located on the same line as the open triple double quotes, or put on the next line. The end quotes should be put on a separate line.
 
-Important notes:
-
-a multi-line docstring should be indented to the same level as the open quotes, for example:
+Important notes: a multi-line docstring should be indented to the same level as the open quotes, for example:
 
 def king_creator(name="Greg", ordinal="I", country="Neverland"):
     """Create a king following the article title naming convention.
@@ -1247,7 +1234,6 @@ The summary line goes here.
 	Returns:
 	int: Description of the return value.
 output
-
 
 But there's also another way to access the documentation strings – you can use the help() function. Make a small amendment in your code: replace the print function invocation with the following line:
 
