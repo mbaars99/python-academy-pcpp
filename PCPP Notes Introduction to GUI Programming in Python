@@ -421,5 +421,130 @@ Let's check if tkinter understands English – look at the code in the editor, o
 Does it work? Let's check.Yes, it definitely does: We encourage to you make some clicks on the button – it will unveil its little secret. Can you see? The colors of the lowered (pressed) button are gray still. Why?
 Because fb and bg refer to raised buttons only. There two additional parameters describing the second set of colors named activeforeground and activebackground respectively used by the event controller when the button is pressed. Do you want to check how they work? Do it boldly! We can summarize the test's result saying that any of commonly used English color name can be used with tkinter. Don't bother if you want some of your widgets to be simply white, black, green, gray or even grey. It's easy and handy although not very precise.
 
-Tkinter can do something more for you.
+import tkinter as tk
+
+window = tk.Tk()
+button = tk.Button(window, text="Button #1",
+                   bg="MediumPurple",
+                   fg="LightSalmon",
+                   activeforeground="LavenderBlush",
+                   activebackground="HotPink")
+button.pack()
+window.mainloop()
+
+Tkinter can do something more for you. Tkinter recognizes over 750 predefined color names – all of them can be found here. Feel free to use them – we've showed our try in the editor.
+This is what we get: Yes, it definitely does: The third method you can use is based on the fact that each color can be obtained by mixing (adding) three primary colors: red (R), green (G) and blue (B). The phenomenon is utilized by the so-called RGB color model which is one of the additive color models and it's widely used in many application, e.g. in color displays of different kinds.
+
+One of the RGB model implementations allows you to set the saturation of every of primary colors in the range <0..255> what gives 256 different saturation levels, from color's absence (saturation 0) to full color's presence (saturation 255). Do you think it's not too much? Maybe, but don't forget that you mix three different colors (so-called color components) so the full spectrum consists of 256*256*256 = 16,777,216 colors. An average human can distinguish about 7 million colors, consequently, the model should work well and it really does.
+
+Let's take a closer look at this.
+
+When all the components are set to zero (absence of the colors), we get black as a result.
+When all the components are set to 255 (full presence of the colors), we get white as a result.
+When one of the components is set to 255 while others are set to 0, we get one of the primary colors – red, green or blue.
+
+Setting non-zero values for more than one component produces intermediate colors, e.g. red and blue set to 255 with green set to 0 gives the violet. It seems clear, doesn't it? OK, but how to specify all these (more than 16 million) mixes in a comprehensive way? It's is done by a trick used extensively in web pages – as a string starting with a hash (#) followed by 6 hexadecimal digits. Each pair of the digits forms the value from range 0x00..0xFF (0..255) what determines the specific component level.
+
+This is how it works:
+
+All three pairs (RR, GG and GG) are two-digit hexadecimal number so:
+
+#000000 is black
+#FFFFFF is white
+#FF0000 is red
+#00FF00 is green
+#0000FF is blue
+#00FFFF is turquoise
+#FF00FF is violet
+...
+Please, forgive us that we made that list so short. To tell the truth, we have no idea how to name each of these 16 million colors – do you? Note: when all the components are set to the same value, equal neither to zero nor to 0xFF (e.g. #0F0F0F0), you will get 254 shades of gray.
+
+Look at the code in the editor. We want to show you you a little test showing how the RGB works: Do the colors look the same as in the previous code? They should look the same as we used RGB equivalents of the previously used tkinter color names. Now try to find RGB codes for all your favorite colors. There are so many choices – don't feel lost!
+
+import tkinter as tk
+
+window = tk.Tk()
+button = tk.Button(window, text="Button #1",
+                   bg="#9370DB",
+                   fg="#FFA07A",
+                   activeforeground="#FFF0F5",
+                   activebackground="#FF69B4")
+button.pack()
+window.mainloop()
+
+Building a GUI application from scratch. Now we're going to build a very simple and rather useless GUI application. Does that sound weird? Maybe, but the application, when ready, will make you more accustomed to some tkinter habits and conventions. Our fabulous goal will look like the vision presented below:
+
+Are you ready? Let's start. As everyone knows, Rome wasn't built in a day, and our application isn't an exception. We'll start with something absolutely obvious – we'll construct a window and launch an event controller – look at the code in the editor to see how to do it. Our window looks like this one for now: There's nothing surprising yet. Let's add something to this dull gray area.
+
+# the pack() method is used with the Tkinter library, which is a standard GUI (Graphical User Interface) toolkit. The pack() method is one of the geometry managers in Tkinter, and it is used to organize widgets in blocks before placing them in the parent widget, which can be the main window or a frame.
+
+Our new friend is called Label – a non-clickable widget able to present short textual information, passed to the widget's constructor using a text argument. The text can later be changed at any moment of the widget's life. As you can see, we're using the pack() geometry manager to compose the window. Let's welcome Label into our window:
+
+Note: pack() resizes the window to a size large enough to fit all the packed widgets. This is its default behavior. Don't worry, the window will grow soon.
+
+Our next companion will be Frame. A Frame is another non-clickable component used to group widgets and to separate them (visually) from other window components. Our Frame plays a less important role – it just occupies a rectangle and fills it with its own color. We expect nothing more for now. Let's check it out. This is how the Frame manifests its presence:
+
+Make our window great again.
+
+Now we invite a Button to join our team. Our Button will be completely mute, as we haven’t bound anything to its command property. You can change that if you want. This is what our window looks like now:
+
+import tkinter as tk
+
+window = tk.Tk()
+
+label = tk.Label(window, text="Little label:")
+label.pack()
+
+frame = tk.Frame(window, height=30, width=100, bg="#000099")
+frame.pack()
+
+button = tk.Button(window, text="Button")
+button.pack(fill=tk.X)
+
+window.mainloop()
+
+Our next component is completely invisible. You won't find it in the window area. It's the switch variable. Can't you see it? It's set to hold an object of the IntVar class. This object is designed to store integer values. "Okay," you may say, "can't we use a regular variable instead?" No, we can't. Objects of the IntVar class are used by tkinter to organize internal communication between different widgets. A regular variable can't play such a role. If you want such an object to store an integer value, you can't use the assignment operator. The class offers a dedicated method for that purpose, and the method is named set().
+Note: we've used the method to store a value of 1 inside the object. As the window's view hasn't changed, we can go directly to the next step.
+
+switch = tk.IntVar()
+switch.set(1)
+window.mainloop()
+
+The next step adds a brand new widget to our window – it’s a Checkbutton. It’s a small square which can be filled with a tick mark, or which can be empty. The Checkbutton is primarily used to represent two-state selections. In other words, it can be in one of two possible states:
+
+the ON state when the Checkbutton is checked/ticked (which can be equated with an affirmative answer to some question)
+the OFF state when the Checkbutton is cleared (you can think of it as a kind of negative answer)
+Take a look at the Checkbutton constructor – there’s something completely new. Can you see it?
+
+Yes, it’s a variable argument. Note – it’s set to the previously created switch object. The assignment creates a bidirectional link between the object and the widget. How does it work?
+If you check or uncheck the Checkbutton, the switch object will immediately change its state – it will keep 0 if the widget is unchecked, and 1 otherwise.
+If you change the state of the switch object, the Checkbutton will immediately reflect the change – it means that you don’t need to access the Checkbutton itself to check/uncheck it, as you can modify the switch value instead. Look, the switch is initially set to 1. this means that the Checkbutton will be checked when it appears on the screen. Let's check it.
+
+import tkinter as tk
+
+win = tk.Tk()
+
+label = tk.Label(win, text="Little label:")
+label.pack()
+
+frame = tk.Frame(win, height=30, width=100, bg="#000099")
+frame.pack()
+
+button = tk.Button(win, text="Button")
+button.pack(fill=tk.X)
+
+switch = tk.IntVar()
+switch.set(1)
+
+checkbutton = tk.Checkbutton(win, text="Check Button", variable=switch)
+checkbutton.pack()
+
+win.mainloop()
+
+
+
+
+
+
+
 
