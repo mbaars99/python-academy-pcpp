@@ -416,11 +416,10 @@ We think that there is one intriguing question that can be asked here and now: d
 
 Adding colors. Nearly everything you put inside your windows may be colored. Most widgets have dedicated properties to handle their colors and we will tell you about them while discussing the widgets themselves. Currently, the most important thing is getting to know how the colors are described in tkinter, in other words, what means can you use to order the button to be red or blue.
 There are at least three methods designed to meet your needs. We will tell you about them on the example of Button but don't forget that these ways are universal and can be used virtually everywhere.
+Let's check if tkinter understands English – look at the code in the editor, our test is there. Note the two new arguments we use in the constructor invocation: bg (what is a short form of “background-color”) and fg (“foreground-color”). We went along the line of least resistance here – we've just made use of regular English names of colors and packed them inside strings.
 
+Does it work? Let's check.Yes, it definitely does: We encourage to you make some clicks on the button – it will unveil its little secret. Can you see? The colors of the lowered (pressed) button are gray still. Why?
+Because fb and bg refer to raised buttons only. There two additional parameters describing the second set of colors named activeforeground and activebackground respectively used by the event controller when the button is pressed. Do you want to check how they work? Do it boldly! We can summarize the test's result saying that any of commonly used English color name can be used with tkinter. Don't bother if you want some of your widgets to be simply white, black, green, gray or even grey. It's easy and handy although not very precise.
 
+Tkinter can do something more for you.
 
-
-
-
-
->>>>>>>. 1.4.1.1 Coloring your widgets
