@@ -634,7 +634,147 @@ Now it’s time to show you some details of the events’ lives and anatomy. We�
 
 Of course, you can use the regular print() function to show messages and present a debug trace. The output will appear in the standard Python console, without affecting the application window. It’s okay if used in the early stages of development, but it’s very inelegant if you want the application to behave in a mature way.
 
->>> right side: 1.6.1.1 Events and how to handle them
+The function we’ll use for our experiments is named showinfo(), it comes from the messagebox module, and it needs two arguments which are strings: messagebox.showinfo(title, info)
+
+the first string will be used by the function to title the message box which will appear on the screen; you can use an empty string, and the box will be untitled then;
+the second string is a message to display inside the box; the string can be of any length (but remember, the screen isn’t elastic and won’t stretch if you’re going to display a whole encyclopedia volume); note: you can use the \n digraph to visually break the info into separate lines. We’ll ask the showinfo() function to show us its possibilities.
+
+In the editor we've provided a very simple code demonstrating how showinfo() works: Note the \n embedded inside the info string. And this is what the final message box looks like:
+
+import tkinter
+from tkinter import messagebox
+
+def clicked():
+    messagebox.showinfo("info", "some\ninfo")
+    window.bell()
+
+window = tkinter.Tk()
+button_1 = tkinter.Button(window, text="Show info", command=clicked)
+button_1.pack()
+button_2 = tkinter.Button(window, text="Quit", command=window.destroy)
+button_2.pack()
+window.mainloop()
+
+If your widget is a clickable one, you can connect a callback to it using its command property, while the property can be initially set by the constructor invocation. We’ve already practiced this, so the snippet in the editor won’t be a surprise to you. Note – there are three widgets in all, but only one of them (the Button) is clickable by nature. Such a widget’s constructor is equipped with the command parameter, which is used to bind a callback. The window along with its message box looks like this:
+
+import tkinter as tk
+from tkinter import messagebox
+
+def click():
+    tk.messagebox.showinfo("Click!","I love clicks!")
+
+window = tk.Tk()
+label = tk.Label(window, text="Label")
+label.pack()
+
+button = tk.Button(window, text="Button", command=click)
+button.pack(fill=tk.X)
+
+frame = tk.Frame(window, height=30, width=100, bg="#55BF40")
+frame.pack();
+
+window.mainloop()
+
+#Another example
+import tkinter as tk
+
+def on_click(event):
+    print("Button clicked!")
+
+root = tk.Tk()
+button = tk.Button(root, text="Click Me")
+button.pack()
+
+# Bind the left mouse button click event to the button
+button.bind("<Button-1>", on_click)
+
+root.mainloop()
+
+#The widget.bind(event, callback) method is commonly used in graphical user interface (GUI) programming, particularly with the Tkinter library in Python. This method is used to bind an event to a widget, so that when the event occurs, a specified callback function is executed. Here's a breakdown of the components:
+
+widget: This is the GUI element (such as a button, label, or entry) to which you want to bind the event.
+event: This is a string that specifies the type of event you want to bind to the widget. Events can include things like mouse clicks, key presses, or other user interactions. For example, "<Button-1>" represents a left mouse button click, and "<KeyPress-A>" represents pressing the "A" key on the keyboard.
+callback: This is the function that will be called when the specified event occurs. The callback function typically takes at least one argument, which is an event object containing information about the event.
+#
+
+Some of the widgets (especially those that are not clickable by nature) have neither a command property nor a constructor parameter of that name. Fortunately, you’re still able to bind a callback to any of the events it may receive (including clicks, of course) and this is done with a method named – it couldn’t be anything else – bind(): widget.bind(event, callback) The bind() method needs two arguments:
+the event you want to launch your callback with; the callback itself. Looks clear, doesn’t it? Of course, there are two questions that should be answered immediately:
+
+Q: What is an event from the event controller’s point of view?
+A: It’s an object carrying some useful info about what actually happens when the event has been induced (by the user or by another factor).
+Q: How are the events identified?
+A: By unique names – each event has its own name and the name is just a unified string.
+
+Useful events. We’ve gathered some of the most usable event names – don’t try to learn them by heart.
+
+Event name	Event role
+<Button-1>	Single left-click (if your mouse is configured for a right-handed user)
+<Button-2>	Single middle-click
+<Button-3>	Single right-click
+<ButtonRelease-1>	Left mouse button release
+
+Note: there are also events named <ButtonRelease-2> and <ButtonRelease-3>
+<DoubleButton-1>	Double left-click
+
+Note: there are also events named <DoubleButton-2> and <DoubleButton-3>
+
+Note again: the <Button-1> event is a part of <DoubleButton-1> too; if you assign a callback to <Button-1>, it will be launched, too!
+
+Event name	Event role
+<Enter>	Mouse cursor appears over the widget
+<Leave>	Mouse cursor leaves the widget area
+<Focus-In>	The widget gains the focus
+<Focus-Out>	The widget loses the focus
+<Return>	The user presses the Enter/Return key
+<Key>	The user presses any key
+
+Event name	Event role
+x	The user presses x key (x can be neither a space nor the < key)
+<space>	The user presses the spacebar
+<less>	The user presses the < key
+<Cancel>	The user presses the key/keys used by the current OS to stop the program (e.g., Ctrl-C or Ctrl-Break)
+<BackSpace>	The user presses the Backspace key
+<Tab>	The user presses Tab key
+
+Event name	Event role
+<Shift_L>	The user presses one of the Shift keys
+<Control_L>	The user presses one of the Control keys
+<Alt_L>	The user presses one of the Alt keys
+<Pause>	The user presses the Pause key
+<Caps_Lock>	The user presses the Caps Lock key
+<Esc>	The user presses the Escape keys
+
+Event name	Event role
+<Prior>	The Page Up key
+<Next>	The Page Down key
+<End>	The End key
+<Home>	The Home key
+<Left>
+
+<Right>
+<Up>
+<Down>	Cursor (arrows) keys
+<Num_Lock>
+<Scroll_Lock>	The two Lock keys
+<Shift-x>
+<Alt-x>
+<Control-x>
+<KeyPress>
+
+Don’t be afraid if some of the events look a bit suspicious. You’ll get used to them soon. Note:
+a callback designed for usage with the command property/parameter is a parameterless function;
+a callback intended to cooperate with the bind() method is a one-parameter function (the callback’s argument carries some info about the captured event)
+fortunately, it doesn’t mean that you have to define two different callbacks for those two applications, and this is how we’ll cope with the above requirements:
+
+def callback(ev=None):
+    :
+    :
+
+the callback will work flawlessly in both of these contexts, and moreover, it’ll give you the chance to identify which one of the two possible styles of launch has just occurred.
+We’re going to change our previous example a bit by making it sensitive to more than just one click. We've provided the newer version of our code in the editor. Pay attention to Line I and Line II in the above code. They show the way in which you can bind your callback to any of non-clickable widgets. The bind remains active to the end of the application’s work, but you can also manually unbind the event at any moment (and bind it again when you wish). We encourage you to play with the code – test the behavior of some of the other events. It’ll be fun... we think. We’ve said previously that an event is actually an object. Let’s shed some light on that.
+
+
+
 
 
 
